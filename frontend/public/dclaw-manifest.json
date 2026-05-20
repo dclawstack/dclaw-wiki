@@ -1,0 +1,13 @@
+{
+  "app_id": "wiki",
+  "app_name": "DClaw Wiki",
+  "category": "Knowledge",
+  "tagline": "Internal Wikipedia",
+  "color": "#6366F1",
+  "version": "1.0.0",
+  "backend_port": 8025,
+  "frontend_port": 3025,
+  "database": "dclaw_wiki",
+  "health_endpoint": "/health/",
+  "base_api_path": "/api/v1"
+}
