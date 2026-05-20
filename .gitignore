@@ -8,3 +8,7 @@
 # Environment
 .env
 .env.local
+
+#Graphify
+graphify-out/cache/
+graphify-out/.graphify*
