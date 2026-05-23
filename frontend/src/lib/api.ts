@@ -1,4 +1,9 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "";
+// Server-side fetches bypass Next.js rewrites, so we need the direct backend URL.
+// Client-side fetches use "" (empty) to go through the rewrite proxy.
+const API_BASE =
+  typeof window === "undefined"
+    ? (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8113")
+    : "";
 
 class ApiError extends Error {
   status: number;

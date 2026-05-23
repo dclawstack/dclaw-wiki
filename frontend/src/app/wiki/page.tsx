@@ -31,27 +31,27 @@ export default async function WikiHome() {
   return (
     <div className="max-w-4xl mx-auto p-8 space-y-8">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">Wiki</h1>
+        <h1 className="text-3xl font-bold text-[var(--text)]">Wiki</h1>
         <Link href="/wiki/new">
           <Button>+ New Page</Button>
         </Link>
       </div>
 
       {error && (
-        <div className="rounded-md bg-red-50 border border-red-200 p-4 text-sm text-red-700">
+        <div className="rounded-md bg-[var(--error-bg)] border border-[var(--error-border)] p-4 text-sm text-[var(--error-text)]">
           {error}
         </div>
       )}
 
       {recentPages.length > 0 && (
         <section>
-          <h2 className="text-lg font-semibold text-gray-700 mb-3">Recently Updated</h2>
+          <h2 className="text-lg font-semibold text-[var(--text)] mb-3">Recently Updated</h2>
           <div className="space-y-2">
             {recentPages.map((page) => (
               <Link key={page.id} href={`/wiki/${page.id}`} className="block group">
-                <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 hover:border-indigo-300 hover:shadow-sm transition">
-                  <span className="font-medium text-gray-900 group-hover:text-indigo-600">{page.title}</span>
-                  <span className="text-xs text-gray-400">{formatDate(page.updated_at)}</span>
+                <div className="flex items-center justify-between rounded-lg border border-[var(--content-border)] bg-[var(--content-bg)] px-4 py-3 hover:border-[var(--accent-col)] hover:shadow-sm transition">
+                  <span className="font-medium text-[var(--text)] group-hover:text-[var(--accent-col)]">{page.title}</span>
+                  <span className="text-xs text-[var(--text-muted)]">{formatDate(page.updated_at)}</span>
                 </div>
               </Link>
             ))}
@@ -60,7 +60,7 @@ export default async function WikiHome() {
       )}
 
       <section>
-        <h2 className="text-lg font-semibold text-gray-700 mb-3">
+        <h2 className="text-lg font-semibold text-[var(--text)] mb-3">
           All Pages
           {pages.length > 0 && (
             <Badge variant="secondary" className="ml-2 text-xs">
@@ -69,8 +69,8 @@ export default async function WikiHome() {
           )}
         </h2>
         {rootPages.length === 0 ? (
-          <Card>
-            <CardContent className="pt-8 pb-8 text-center text-gray-400">
+          <Card className="bg-[var(--content-bg)] border-[var(--content-border)]">
+            <CardContent className="pt-8 pb-8 text-center text-[var(--text-muted)]">
               <p className="mb-4">No pages yet. Create your first wiki page to get started.</p>
               <Link href="/wiki/new">
                 <Button variant="outline">Create First Page</Button>
@@ -81,15 +81,15 @@ export default async function WikiHome() {
           <div className="grid gap-4 sm:grid-cols-2">
             {rootPages.map((page) => (
               <Link key={page.id} href={`/wiki/${page.id}`} className="block group">
-                <Card className="h-full hover:border-indigo-300 hover:shadow-sm transition">
+                <Card className="h-full bg-[var(--content-bg)] border-[var(--content-border)] hover:border-[var(--accent-col)] hover:shadow-sm transition">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-base group-hover:text-indigo-600">{page.title}</CardTitle>
+                    <CardTitle className="text-base text-[var(--text)] group-hover:text-[var(--accent-col)]">{page.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-gray-500 line-clamp-2">
+                    <p className="text-sm text-[var(--text-muted)] line-clamp-2">
                       {page.content || "No content yet."}
                     </p>
-                    <p className="text-xs text-gray-400 mt-2">{formatDate(page.updated_at)}</p>
+                    <p className="text-xs text-[var(--text-muted)] mt-2">{formatDate(page.updated_at)}</p>
                   </CardContent>
                 </Card>
               </Link>

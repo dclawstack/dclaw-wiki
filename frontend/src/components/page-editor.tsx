@@ -32,6 +32,7 @@ export function PageEditor({ page, defaultParentId }: PageEditorProps) {
     try {
       if (isEdit && page) {
         const updated = await updatePage(page.id, { title, content } as PageUpdate);
+        router.refresh();
         router.push(`/wiki/${updated.id}`);
       } else {
         const created = await createPage({
@@ -39,9 +40,9 @@ export function PageEditor({ page, defaultParentId }: PageEditorProps) {
           content,
           parent_id: defaultParentId ?? null,
         } as PageCreate);
+        router.refresh();
         router.push(`/wiki/${created.id}`);
       }
-      router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to save page.");
     } finally {
@@ -77,7 +78,7 @@ export function PageEditor({ page, defaultParentId }: PageEditorProps) {
       </div>
 
       {error && (
-        <div className="rounded-md bg-red-50 border border-red-200 p-3 text-sm text-red-700">
+        <div className="rounded-md bg-[var(--error-bg)] border border-[var(--error-border)] p-3 text-sm text-[var(--error-text)]">
           {error}
         </div>
       )}

@@ -19,8 +19,8 @@ export default async function EditPage({ params }: Props) {
   return (
     <div className="max-w-3xl mx-auto p-8 space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Edit Page</h1>
-        <p className="text-sm text-gray-500 mt-1">Editing: {page.title}</p>
+        <h1 className="text-2xl font-bold text-[var(--text)]">Edit Page</h1>
+        <p className="text-sm text-[var(--text-muted)] mt-1">Editing: {page.title}</p>
       </div>
       <PageEditor page={page} />
     </div>

@@ -30,23 +30,23 @@ export default async function WikiPageView({ params }: Props) {
   return (
     <div className="max-w-4xl mx-auto p-8 space-y-6">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-sm text-gray-500">
-        <Link href="/wiki" className="hover:text-indigo-600">Wiki</Link>
+      <nav className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
+        <Link href="/wiki" className="hover:text-[var(--accent-col)]">Wiki</Link>
         <span>/</span>
         {page.parent_id && (
           <>
-            <Link href={`/wiki/${page.parent_id}`} className="hover:text-indigo-600 truncate max-w-xs">
+            <Link href={`/wiki/${page.parent_id}`} className="hover:text-[var(--accent-col)] truncate max-w-xs">
               Parent
             </Link>
             <span>/</span>
           </>
         )}
-        <span className="text-gray-900 font-medium truncate">{page.title}</span>
+        <span className="text-[var(--text)] font-medium truncate">{page.title}</span>
       </nav>
 
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
-        <h1 className="text-3xl font-bold text-gray-900">{page.title}</h1>
+        <h1 className="text-3xl font-bold text-[var(--text)]">{page.title}</h1>
         <div className="flex gap-2 flex-shrink-0">
           <Link href={`/wiki/${page.id}/history`}>
             <Button variant="ghost" size="sm">History</Button>
@@ -58,24 +58,24 @@ export default async function WikiPageView({ params }: Props) {
       </div>
 
       {/* Meta */}
-      <div className="flex items-center gap-3 text-xs text-gray-400 flex-wrap">
+      <div className="flex items-center gap-3 text-xs text-[var(--text-muted)] flex-wrap">
         {page.created_by && (
-          <span>Created by <span className="text-gray-600">{page.created_by}</span></span>
+          <span>Created by <span className="text-[var(--text)]">{page.created_by}</span></span>
         )}
         {page.updated_by && (
-          <span>· Last edited by <span className="text-gray-600">{page.updated_by}</span></span>
+          <span>· Last edited by <span className="text-[var(--text)]">{page.updated_by}</span></span>
         )}
         <span>· {formatDate(page.updated_at)}</span>
       </div>
 
       {/* Content */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6 min-h-48">
+      <div className="bg-[var(--content-bg)] rounded-lg border border-[var(--content-border)] p-6 min-h-48">
         {page.content ? (
-          <pre className="whitespace-pre-wrap font-sans text-gray-800 text-sm leading-relaxed">
+          <pre className="whitespace-pre-wrap font-sans text-[var(--text)] text-sm leading-relaxed">
             {page.content}
           </pre>
         ) : (
-          <p className="text-gray-400 italic">This page has no content yet.</p>
+          <p className="text-[var(--text-muted)] italic">This page has no content yet.</p>
         )}
       </div>
 

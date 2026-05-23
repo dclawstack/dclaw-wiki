@@ -54,16 +54,16 @@ export function SearchBar() {
         className="pr-8"
       />
       {loading && (
-        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">
+        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[var(--text-muted)]">
           …
         </span>
       )}
 
       {open && (
-        <Card className="absolute z-50 top-full mt-1 w-full shadow-lg border border-gray-200">
+        <Card className="absolute z-50 top-full mt-1 w-full shadow-lg border border-[var(--content-border)] bg-[var(--bg)]">
           <CardContent className="p-0">
             {results.length === 0 ? (
-              <div className="px-4 py-3 text-sm text-gray-400">No results for &ldquo;{query}&rdquo;</div>
+              <div className="px-4 py-3 text-sm text-[var(--text-muted)]">No results for &ldquo;{query}&rdquo;</div>
             ) : (
               <ul>
                 {results.map((page) => (
@@ -71,10 +71,10 @@ export function SearchBar() {
                     <Link
                       href={`/wiki/${page.id}`}
                       onClick={() => { setOpen(false); setQuery(""); }}
-                      className="flex flex-col px-4 py-2 hover:bg-gray-50 border-b border-gray-100 last:border-0"
+                      className="flex flex-col px-4 py-2 hover:bg-[var(--hover-bg)] border-b border-[var(--content-border)] last:border-0"
                     >
-                      <span className="font-medium text-sm text-gray-900">{page.title}</span>
-                      <span className="text-xs text-gray-400 line-clamp-1">{page.content}</span>
+                      <span className="font-medium text-sm text-[var(--text)]">{page.title}</span>
+                      <span className="text-xs text-[var(--text-muted)] line-clamp-1">{page.content}</span>
                     </Link>
                   </li>
                 ))}

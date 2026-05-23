@@ -22,15 +22,15 @@ function PageTreeNode({ node, currentId, depth = 0 }: PageTreeNodeProps) {
         className={cn(
           "flex items-center gap-1 rounded px-2 py-1 text-sm cursor-pointer",
           isActive
-            ? "bg-indigo-100 text-indigo-700 font-medium"
-            : "text-gray-700 hover:bg-gray-100"
+            ? "bg-[var(--hover-bg)] text-[var(--accent-col)] font-medium"
+            : "text-[var(--text-muted)] hover:bg-[var(--hover-bg)] hover:text-[var(--text)]"
         )}
         style={{ paddingLeft: `${(depth + 1) * 12}px` }}
       >
         {hasChildren && (
           <button
             onClick={() => setExpanded((e) => !e)}
-            className="text-gray-400 hover:text-gray-600 w-4 flex-shrink-0"
+            className="text-[var(--text-muted)] hover:text-[var(--text)] w-4 flex-shrink-0"
             aria-label={expanded ? "Collapse" : "Expand"}
           >
             {expanded ? "▾" : "▸"}

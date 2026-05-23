@@ -34,23 +34,23 @@ export default async function HistoryPage({ params }: Props) {
 
   return (
     <div className="max-w-3xl mx-auto p-8 space-y-6">
-      <nav className="flex items-center gap-2 text-sm text-gray-500">
-        <Link href="/wiki" className="hover:text-indigo-600">Wiki</Link>
+      <nav className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
+        <Link href="/wiki" className="hover:text-[var(--accent-col)]">Wiki</Link>
         <span>/</span>
-        <Link href={`/wiki/${page.id}`} className="hover:text-indigo-600">{page.title}</Link>
+        <Link href={`/wiki/${page.id}`} className="hover:text-[var(--accent-col)]">{page.title}</Link>
         <span>/</span>
-        <span className="text-gray-900 font-medium">History</span>
+        <span className="text-[var(--text)] font-medium">History</span>
       </nav>
 
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Page History</h1>
+        <h1 className="text-2xl font-bold text-[var(--text)]">Page History</h1>
         <Link href={`/wiki/${page.id}`}>
           <Button variant="ghost" size="sm">← Back to Page</Button>
         </Link>
       </div>
 
       {revisions.length === 0 ? (
-        <div className="rounded-lg border border-gray-200 bg-white p-8 text-center text-gray-400">
+        <div className="rounded-lg border border-[var(--content-border)] bg-[var(--content-bg)] p-8 text-center text-[var(--text-muted)]">
           No revisions yet. Edit the page to create the first revision.
         </div>
       ) : (
@@ -58,14 +58,14 @@ export default async function HistoryPage({ params }: Props) {
           {revisions.map((rev) => (
             <div
               key={rev.id}
-              className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-5 py-4"
+              className="flex items-center justify-between rounded-lg border border-[var(--content-border)] bg-[var(--content-bg)] px-5 py-4"
             >
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <Badge variant="secondary">v{rev.revision_number}</Badge>
-                  <span className="font-medium text-gray-900">{rev.title}</span>
+                  <span className="font-medium text-[var(--text)]">{rev.title}</span>
                 </div>
-                <div className="text-xs text-gray-400">
+                <div className="text-xs text-[var(--text-muted)]">
                   {rev.changed_by && <span>{rev.changed_by} · </span>}
                   {formatDate(rev.created_at)}
                 </div>

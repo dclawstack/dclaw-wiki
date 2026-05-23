@@ -29,12 +29,12 @@ export default async function Dashboard() {
     .slice(0, 8);
 
   return (
-    <main className="min-h-screen bg-gray-50 p-8">
+    <main className="min-h-screen p-8">
       <div className="max-w-5xl mx-auto space-y-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-500 mt-1">Overview of your wiki</p>
+            <h1 className="text-3xl font-bold text-[var(--text)]">Dashboard</h1>
+            <p className="text-[var(--text-muted)] mt-1">Overview of your wiki</p>
           </div>
           <Link href="/wiki/new">
             <Button>+ New Page</Button>
@@ -46,35 +46,35 @@ export default async function Dashboard() {
         </div>
 
         {error && (
-          <div className="rounded-md bg-red-50 border border-red-200 p-4 text-sm text-red-700">
+          <div className="rounded-md bg-[var(--error-bg)] border border-[var(--error-border)] p-4 text-sm text-[var(--error-text)]">
             {error}
           </div>
         )}
 
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-          <Card>
+          <Card className="bg-[var(--content-bg)] border-[var(--content-border)]">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm text-gray-500 font-normal">Total Pages</CardTitle>
+              <CardTitle className="text-sm text-[var(--text-muted)] font-normal">Total Pages</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold text-indigo-600">{pages.length}</p>
+              <p className="text-3xl font-bold text-[var(--stat-color)]">{pages.length}</p>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="bg-[var(--content-bg)] border-[var(--content-border)]">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm text-gray-500 font-normal">Root Pages</CardTitle>
+              <CardTitle className="text-sm text-[var(--text-muted)] font-normal">Root Pages</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold text-indigo-600">{pages.filter((p) => !p.parent_id).length}</p>
+              <p className="text-3xl font-bold text-[var(--stat-color)]">{pages.filter((p) => !p.parent_id).length}</p>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="bg-[var(--content-bg)] border-[var(--content-border)]">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm text-gray-500 font-normal">Nested Pages</CardTitle>
+              <CardTitle className="text-sm text-[var(--text-muted)] font-normal">Nested Pages</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold text-indigo-600">{pages.filter((p) => p.parent_id).length}</p>
+              <p className="text-3xl font-bold text-[var(--stat-color)]">{pages.filter((p) => p.parent_id).length}</p>
             </CardContent>
           </Card>
         </div>
@@ -82,14 +82,14 @@ export default async function Dashboard() {
         {/* Recent pages */}
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-semibold text-gray-700">Recently Updated</h2>
-            <Link href="/wiki" className="text-sm text-indigo-600 hover:underline">
+            <h2 className="text-lg font-semibold text-[var(--text)]">Recently Updated</h2>
+            <Link href="/wiki" className="text-sm text-[var(--accent-col)] hover:underline">
               View all →
             </Link>
           </div>
           {recentPages.length === 0 ? (
-            <Card>
-              <CardContent className="pt-8 pb-8 text-center text-gray-400">
+            <Card className="bg-[var(--content-bg)] border-[var(--content-border)]">
+              <CardContent className="pt-8 pb-8 text-center text-[var(--text-muted)]">
                 <p className="mb-4">No pages yet. Start building your wiki.</p>
                 <Link href="/wiki/new">
                   <Button variant="outline">Create First Page</Button>
@@ -100,16 +100,16 @@ export default async function Dashboard() {
             <div className="space-y-2">
               {recentPages.map((page) => (
                 <Link key={page.id} href={`/wiki/${page.id}`} className="block group">
-                  <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 hover:border-indigo-300 hover:shadow-sm transition">
+                  <div className="flex items-center justify-between rounded-lg border border-[var(--content-border)] bg-[var(--content-bg)] px-4 py-3 hover:border-[var(--accent-col)] hover:shadow-sm transition">
                     <div className="flex items-center gap-3">
-                      <span className="font-medium text-gray-900 group-hover:text-indigo-600">
+                      <span className="font-medium text-[var(--text)] group-hover:text-[var(--accent-col)]">
                         {page.title}
                       </span>
                       {page.parent_id && (
                         <Badge variant="secondary" className="text-xs">Nested</Badge>
                       )}
                     </div>
-                    <span className="text-xs text-gray-400">{formatDate(page.updated_at)}</span>
+                    <span className="text-xs text-[var(--text-muted)]">{formatDate(page.updated_at)}</span>
                   </div>
                 </Link>
               ))}

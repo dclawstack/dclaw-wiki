@@ -17,9 +17,9 @@ export async function WikiSidebar({ currentPageId }: WikiSidebarProps) {
   }
 
   return (
-    <aside className="w-64 flex-shrink-0 border-r border-gray-200 bg-white h-full flex flex-col">
-      <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-        <Link href="/wiki" className="font-semibold text-gray-900 hover:text-indigo-600">
+    <aside className="w-64 flex-shrink-0 border-r border-[var(--content-border)] bg-[var(--surface)] h-full flex flex-col">
+      <div className="p-4 border-b border-[var(--content-border)] flex items-center justify-between">
+        <Link href="/wiki" className="font-semibold text-[var(--text)] hover:text-[var(--accent-col)]">
           DClaw Wiki
         </Link>
         <Link href="/wiki/new">
@@ -28,12 +28,12 @@ export async function WikiSidebar({ currentPageId }: WikiSidebarProps) {
           </Button>
         </Link>
       </div>
-      <div className="p-3 border-b border-gray-100">
+      <div className="p-3 border-b border-[var(--content-border)]">
         <SearchBar />
       </div>
       <div className="flex-1 overflow-y-auto p-2">
         {tree.length === 0 ? (
-          <p className="text-xs text-gray-400 px-2 pt-2">No pages yet.</p>
+          <p className="text-xs text-[var(--text-muted)] px-2 pt-2">No pages yet.</p>
         ) : (
           <PageTreeNav tree={tree} currentId={currentPageId} />
         )}

@@ -12,3 +12,15 @@
 #Graphify
 graphify-out/cache/
 graphify-out/.graphify*
+
+# Testing
+testsprite_tests/
+remainder_test_scripts/
+backend/tests/
+frontend/test-results/
+
+#MCP
+.mcp.json
+
+#Claude
+.claude
