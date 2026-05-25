@@ -31,17 +31,6 @@ class WikiRepository:
         else:
             page.path = f"/{page.id}/"
 
-        # Create initial revision so history is available immediately
-        initial_revision = PageRevision(
-            page_id=page.id,
-            revision_number=1,
-            title=page.title,
-            content=page.content or "",
-            change_summary="Initial version",
-            changed_by=data.created_by,
-        )
-        self.db.add(initial_revision)
-
         await self.db.commit()
         await self.db.refresh(page)
         return page

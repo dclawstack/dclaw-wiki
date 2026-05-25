@@ -1,9 +1,11 @@
-// Server-side fetches bypass Next.js rewrites, so we need the direct backend URL.
-// Client-side fetches use "" (empty) to go through the rewrite proxy.
+// Server components fetch directly (relative URLs can't be resolved on the
+// server), so they hit BACKEND_URL — the same in-cluster backend the Next
+// rewrite proxy targets. Client-side fetches use "" (empty) to go through the
+// proxy. NEXT_PUBLIC_API_URL is kept empty in production.
 const API_BASE =
   typeof window === "undefined"
-    ? (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8113")
-    : "";
+    ? (process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:8113")
+    : (process.env.NEXT_PUBLIC_API_URL || "");
 
 class ApiError extends Error {
   status: number;
@@ -155,6 +157,24 @@ export async function wikiChat(question: string): Promise<ChatResponse> {
 
 export async function getRelatedPages(pageId: string, limit = 5): Promise<RelatedPage[]> {
   return fetchJson<RelatedPage[]>(`/api/v1/ai/related-pages/${pageId}?limit=${limit}`);
+}
+
+// ── Demo seed / clear ───────────────────────────────────────────────────────
+// Self-contained demo utility — see backend app/api/v1/seed.py and the
+// <SeedControls /> block on the landing page. Remove all three to drop it.
+
+export interface SeedResult {
+  seeded: boolean;
+  pages: number;
+  revisions: number;
+}
+
+export async function seedDemoData(): Promise<SeedResult> {
+  return fetchJson<SeedResult>("/api/v1/seed", { method: "POST" });
+}
+
+export async function clearDemoData(): Promise<{ cleared: boolean }> {
+  return fetchJson<{ cleared: boolean }>("/api/v1/seed", { method: "DELETE" });
 }
 
 export { ApiError };

@@ -1,4 +1,4 @@
-from sqlalchemy import select, or_, func
+from sqlalchemy import select, or_, case
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.wiki import WikiPage
@@ -25,7 +25,7 @@ class SearchService:
             )
             .order_by(
                 # Rank title matches higher than content matches
-                func.coalesce(WikiPage.title.ilike(pattern).cast(type_=None), False).desc(),
+                case((WikiPage.title.ilike(pattern), 0), else_=1),
                 WikiPage.updated_at.desc(),
             )
             .limit(limit)

@@ -7,6 +7,7 @@ from app.core.database import init_db
 from app.api.routes import health
 from app.api.v1 import wiki, search, revisions, ai
 from app.api.v1 import demo
+from app.api.v1 import seed
 
 
 @asynccontextmanager
@@ -25,3 +26,5 @@ app.include_router(search.router, prefix="/api/v1", tags=["search"])
 app.include_router(revisions.router, prefix="/api/v1", tags=["revisions"])
 app.include_router(ai.router, prefix="/api/v1", tags=["ai"])
 app.include_router(demo.router, prefix="/api/v1", tags=["demo"])
+# Demo seed / clear — self-contained utility (see app/api/v1/seed.py).
+app.include_router(seed.router, prefix="/api/v1/seed", tags=["seed"])
