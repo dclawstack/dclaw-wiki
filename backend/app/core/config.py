@@ -3,14 +3,23 @@ from functools import lru_cache
 
 
 class Settings(BaseSettings):
-    app_name: str = "DClaw App"
+    app_name: str = "DClaw Wiki"
     app_env: str = "dev"
     debug: bool = True
 
-    database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/dclaw_app"
+    database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/dclaw_wiki"
 
     secret_key: str = "change-me-in-production"
     access_token_expire_minutes: int = 60
+
+    # AI — OpenRouter (cloud) with Ollama fallback
+    openrouter_api_key: str = ""
+    openrouter_model: str = "meta-llama/llama-3.1-8b-instruct"
+    openrouter_base_url: str = "https://openrouter.ai/api/v1"
+
+    # Ollama (local fallback)
+    ollama_url: str = "http://localhost:11434"
+    ollama_model: str = "llama3.1"
 
     class Config:
         env_file = ".env"

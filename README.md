@@ -1,95 +1,129 @@
-# DClaw Scaffold
+# DClaw Wiki
 
-> **The single source of truth for new DClaw app development.**
-> Clone this repo, rename it, fill in your `PRODUCT-SPEC.md`, and hand it to your coding agents.
+Team knowledge base SaaS — hierarchical pages, revision history, AI-powered search, and wiki copilot.
 
-## What This Is
+## Ports
 
-This scaffold contains the **complete boilerplate** for any DClaw vertical SaaS app:
-- ✅ FastAPI backend with correct SQLAlchemy 2.0 setup
-- ✅ Next.js 14 frontend with Tailwind + pre-built UI components
-- ✅ Docker + docker-compose with working healthchecks
-- ✅ Helm chart for Kubernetes deployment
-- ✅ Alembic migrations setup
-- ✅ pytest test harness with pinned pytest-asyncio==0.24.0
-- ✅ GitHub Actions CI
-- ✅ `AGENTS.md` + `PLAN-v1.2.md` templates
-- ✅ Pre-built UI components (no shadcn CLI needed)
+| Service | Port |
+|---------|------|
+| Backend (FastAPI) | 8113 |
+| Frontend (Next.js) | 3027 |
+| Database (Postgres) | 5436 |
 
-## How to Use
+## Tech Stack
 
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Next.js 14 (App Router), TypeScript, Tailwind CSS, shadcn/ui |
+| Backend | FastAPI, SQLAlchemy 2.0 (async), Pydantic v2 |
+| Database | PostgreSQL 16 via asyncpg |
+| Infrastructure | Docker Compose |
+
+## Features
+
+- **Wiki Pages CRUD** — create, read, update, delete pages with a rich editor
+- **Hierarchical Page Tree** — parent-child page structure with collapsible sidebar navigation
+- **Revision History** — every page edit creates a revision; view history and restore any version
+- **Full-Text Search** — debounced live search with dropdown results
+- **AI Wiki Copilot** — floating chat panel for asking questions about wiki content (OpenRouter / Ollama)
+- **Dashboard** — overview with page stats and recently updated pages
+- **Dark / Light Theme** — toggle with localStorage persistence; accent color `#06b6d4` (cyan)
+- **Active Tab Highlighting** — current route highlighted in the header navigation
+- **Demo Seed Data** — seed 15 pages + 30 revisions via the floating widget or API
+- **Initial Revision on Create** — every new page gets a "v1" revision so history is immediately available
+
+## Local Dev
+
+### Prerequisites
+- Docker running (for PostgreSQL)
+- Python 3.12+ with venv at `backend/.venv`
+- Node.js 20+ with modules at `frontend/node_modules`
+
+### Start Database
 ```bash
-# 1. Clone the scaffold
-git clone https://github.com/dclawstack/dclaw-scaffold.git dclaw-YOURAPP
-cd dclaw-YOURAPP
-
-# 2. Find/replace placeholders
-# {APP_NAME}    -> Your app name (e.g., CRM)
-# {BACKEND_PORT}-> Next free port (see port registry below)
-# {FRONTEND_PORT}-> Next free port
-# {DB_NAME}     -> dclaw_yourapp
-
-# 3. Write your PRODUCT-SPEC.md
-# See PRODUCT-SPEC.md.template for the format
-
-# 4. Hand to your coding agents
-# See SCALING-PLAYBOOK.md for the parallel agent workflow
+docker compose up -d postgres
+# Or standalone:
+# docker run -d --name dclaw-wiki-db -e POSTGRES_USER=learn -e POSTGRES_PASSWORD=learn -e POSTGRES_DB=dclaw_wiki -p 5436:5432 postgres:16-alpine
 ```
 
-## Critical Rules for Agents
+### Start Backend
+```bash
+cd backend
+source .venv/bin/activate
+uvicorn app.api.main:app --host 127.0.0.1 --port 8113
+```
+The database schema is auto-created on startup via `Base.metadata.create_all`.
 
-### DO NOT install shadcn CLI
-The scaffold includes pre-built UI components in `frontend/src/components/ui/`. Installing `shadcn` v4 or `@base-ui/react` will break the Tailwind v3 build.
+### Start Frontend
+```bash
+cd frontend
+npm run dev
+```
+Opens at http://localhost:3027. API calls are proxied to the backend via Next.js rewrites in `next.config.js`.
 
-### DO NOT change the Postgres test port
-`backend/tests/conftest.py` uses `localhost:5432`. GitHub Actions CI maps the Postgres service to port 5432. Changing this breaks CI.
+### Seed Demo Data
+```bash
+curl -X POST http://localhost:8113/api/v1/demo/seed
+# Or use the SeedWidget on the landing page at http://localhost:3027
+```
 
-### DO NOT delete `.github/workflows/ci.yml`
-This file is required for GitHub Actions to run tests on every push.
+## E2E Tests
 
-### DO NOT upgrade pytest-asyncio
-Keep `pytest-asyncio==0.24.0` pinned in `requirements.txt`. v1.3.0 breaks fixture scoping.
+Automated E2E tests via [TestSprite](https://testsprite.com). Requires backend on port 8113, frontend on port 3027, and DB on port 5436.
 
-## Port Registry
+```bash
+# Run full test suite via TestSprite MCP (requires API key in .mcp.json)
+# Or run remainder scripts locally:
+bash remainder_test_scripts/run_all.sh
+```
 
-| App | Backend Port | Frontend Port | Database |
-|-----|-------------|---------------|----------|
-| dclaw-chat | 8090 | 3000 | dclaw_chat |
-| dclaw-med | 8092 | 3004 | dclaw_med |
-| dclaw-learn | 8093 | 3003 | dclaw_learn |
-| dclaw-code | 8094 | 3005 | dclaw_code |
-| dclaw-legal | 8099 | 3013 | dclaw_legal |
-| dclaw-crm | 8095 | 3006 | dclaw_crm |
-| dclaw-finance | 8096 | 3007 | dclaw_finance |
-| dclaw-hr | 8097 | 3008 | dclaw_hr |
-| **TBD #9** | **8098** | **3009** | **dclaw_xxx** |
-| **TBD #10** | **8100** | **3010** | **dclaw_xxx** |
+Test results and report are in `testsprite_tests/`.
 
-> **Rule:** New apps take the next available port. Update this table when assigning.
+## Backend Entry Point
 
-## Files You Must Customize
+`backend/app/api/main.py` — routers mounted at `/api/v1/`
 
-| File | What to Change |
-|------|---------------|
-| `backend/app/core/config.py` | `app_name`, default database name |
-| `backend/app/api/main.py` | Wire v1 routers |
-| `frontend/package.json` | Package name |
-| `frontend/src/app/layout.tsx` | Title, description |
-| `frontend/src/app/page.tsx` | Dashboard content |
-| `docker-compose.yml` | Port mappings |
-| `helm/Chart.yaml` | Chart name |
-| `helm/values.yaml` | Image repository names |
-| `AGENTS.md` | App identity, port numbers |
-| `PLAN-v1.2.md` | Feature backlog |
-| `PRODUCT-SPEC.md` | (Create this) Domain models, business logic |
+## API Routes
 
-## What You Should NOT Change
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/health/` | Health check |
+| POST | `/api/v1/pages` | Create a wiki page |
+| GET | `/api/v1/pages` | List all wiki pages |
+| GET | `/api/v1/pages/tree` | Page tree (hierarchical) |
+| GET | `/api/v1/pages/{id}` | Get a single page |
+| PATCH | `/api/v1/pages/{id}` | Update a page |
+| DELETE | `/api/v1/pages/{id}` | Delete a page |
+| GET | `/api/v1/search?q=...` | Search pages |
+| GET | `/api/v1/pages/{id}/revisions` | List page revisions |
+| POST | `/api/v1/pages/{id}/revisions/{rev_id}/restore` | Restore a revision |
+| POST | `/api/v1/ai/wiki-chat` | AI copilot chat |
+| GET | `/api/v1/ai/related-pages/{id}` | Find related pages |
+| POST | `/api/v1/demo/seed` | Seed demo data (15 pages, 30 revisions) |
+| DELETE | `/api/v1/demo/clear` | Clear demo data |
+| GET | `/api/v1/demo/status` | Demo data status |
 
-- `app/models/base.py` — `DeclarativeBase` pattern
-- `app/core/database.py` — Engine/session factory
-- `docker-compose.yml` healthcheck commands
-- `frontend/Dockerfile` `ARG NEXT_PUBLIC_API_URL` pattern
-- `tests/conftest.py` — Test DB override pattern (keep `localhost:5432`)
-- `frontend/src/components/ui/*.tsx` — Pre-built components (use as-is)
-- `requirements.txt` — Keep `pytest-asyncio==0.24.0` pinned
-- `.github/workflows/ci.yml` — Do not delete
+## Frontend Routes
+
+| Path | Description |
+|------|-------------|
+| `/` | Homepage with hero, feature grid, seed widget |
+| `/wiki` | Wiki landing — page list, recent updates, sidebar tree |
+| `/wiki/new` | Create new page |
+| `/wiki/[id]` | View page with breadcrumbs and content |
+| `/wiki/[id]/edit` | Edit page |
+| `/wiki/[id]/history` | Revision history with restore buttons |
+| `/dashboard` | Stats cards and recently updated pages |
+
+## Theme
+
+The app supports dark and light modes with two accent colours:
+
+| Variable | Light | Dark |
+|----------|-------|------|
+| `--bg` | `#ffffff` | `#0f172a` |
+| `--surface` | `#f1f5f9` | `#1e293b` |
+| `--text` | `#0f172a` | `#f1f5f9` |
+| `--accent-col` | `#06b6d4` | `#22d3ee` |
+
+Toggle via the sun/moon button in the header. Preference is saved in `localStorage`.

@@ -1,0 +1,582 @@
+{
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/.claude/settings.local.json": {
+    "mtime": 1779263440.324399,
+    "ast_hash": "f62f637a1c2e82486addd56620b009ef",
+    "semantic_hash": "f62f637a1c2e82486addd56620b009ef"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/tests/test_health.py": {
+    "mtime": 1779257196.0435977,
+    "ast_hash": "e0eecc6564252a71207faac0de9f6ab4",
+    "semantic_hash": "e0eecc6564252a71207faac0de9f6ab4"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/tests/conftest.py": {
+    "mtime": 1779257196.0435977,
+    "ast_hash": "c48a07389d5230090845fa3312a7cb1a",
+    "semantic_hash": "c48a07389d5230090845fa3312a7cb1a"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/tests/__init__.py": {
+    "mtime": 1779257196.043393,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/tests/test_wiki_api.py": {
+    "mtime": 1779263201.659413,
+    "ast_hash": "137fc82faaa53ba876276baaf473b333",
+    "semantic_hash": "137fc82faaa53ba876276baaf473b333"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/__init__.py": {
+    "mtime": 1779257196.0429235,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/repositories/wiki_repo.py": {
+    "mtime": 1779263128.5182247,
+    "ast_hash": "0584f2ac6c691791f43a8b097021c6a9",
+    "semantic_hash": "0584f2ac6c691791f43a8b097021c6a9"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/repositories/base_repo.py": {
+    "mtime": 1779257196.043393,
+    "ast_hash": "9d02d98e0b3a4809d383f544a32265b7",
+    "semantic_hash": "9d02d98e0b3a4809d383f544a32265b7"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/repositories/__init__.py": {
+    "mtime": 1779257196.0433447,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/api/main.py": {
+    "mtime": 1779267043.2096138,
+    "ast_hash": "9c6f9b1706d6ef314bb5221ba2602645",
+    "semantic_hash": "9c6f9b1706d6ef314bb5221ba2602645"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/api/__init__.py": {
+    "mtime": 1779257196.043047,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/api/routes/health.py": {
+    "mtime": 1779257196.043118,
+    "ast_hash": "51f50cb90a70efb0f8cd954397c68f10",
+    "semantic_hash": "51f50cb90a70efb0f8cd954397c68f10"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/api/routes/__init__.py": {
+    "mtime": 1779257196.043067,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/api/v1/search.py": {
+    "mtime": 1779263156.785682,
+    "ast_hash": "b57ef6caa33b0de07771223c04a264de",
+    "semantic_hash": "b57ef6caa33b0de07771223c04a264de"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/api/v1/wiki.py": {
+    "mtime": 1779263151.3595939,
+    "ast_hash": "7bd02fed627be56ad883bfe97ebf8364",
+    "semantic_hash": "7bd02fed627be56ad883bfe97ebf8364"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/api/v1/__init__.py": {
+    "mtime": 1779257196.043118,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/api/v1/revisions.py": {
+    "mtime": 1779263163.6217928,
+    "ast_hash": "5b3177a6476bf266464dbcd3f3539791",
+    "semantic_hash": "5b3177a6476bf266464dbcd3f3539791"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/api/v1/ai.py": {
+    "mtime": 1779267032.5238433,
+    "ast_hash": "ebf07d1e61bb7441544aeb3cde7edcc8",
+    "semantic_hash": "ebf07d1e61bb7441544aeb3cde7edcc8"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/schemas/wiki.py": {
+    "mtime": 1779263102.0387993,
+    "ast_hash": "0a00d7828274aab6da0987306db66929",
+    "semantic_hash": "0a00d7828274aab6da0987306db66929"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/schemas/revision.py": {
+    "mtime": 1779263110.012927,
+    "ast_hash": "54cba6e96579921c8b69b408d29dc0f2",
+    "semantic_hash": "54cba6e96579921c8b69b408d29dc0f2"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/schemas/__init__.py": {
+    "mtime": 1779257196.043393,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/models/wiki.py": {
+    "mtime": 1779263078.7584274,
+    "ast_hash": "ebda904f3704fe297da62e6c91eef230",
+    "semantic_hash": "ebda904f3704fe297da62e6c91eef230"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/models/base.py": {
+    "mtime": 1779257196.0433447,
+    "ast_hash": "6fbdbd7a1b1fbb8a6ce2ecf6f38450ff",
+    "semantic_hash": "6fbdbd7a1b1fbb8a6ce2ecf6f38450ff"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/models/revision.py": {
+    "mtime": 1779263085.940542,
+    "ast_hash": "d1b9faecdea4e4e8b6afaa91b46793c2",
+    "semantic_hash": "d1b9faecdea4e4e8b6afaa91b46793c2"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/models/__init__.py": {
+    "mtime": 1779263094.963686,
+    "ast_hash": "3fde8ce8e2060e79c1010285c984f4a5",
+    "semantic_hash": "3fde8ce8e2060e79c1010285c984f4a5"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/core/utils.py": {
+    "mtime": 1779257196.0432522,
+    "ast_hash": "2eb4fa433770dbcf9b7ebd03c16e560b",
+    "semantic_hash": "2eb4fa433770dbcf9b7ebd03c16e560b"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/core/database.py": {
+    "mtime": 1779257196.0432522,
+    "ast_hash": "a55a40e371b173ab887ebf5e27546850",
+    "semantic_hash": "a55a40e371b173ab887ebf5e27546850"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/core/config.py": {
+    "mtime": 1779267003.5001342,
+    "ast_hash": "59c4408f0ae1661b1595f32536fc1041",
+    "semantic_hash": "59c4408f0ae1661b1595f32536fc1041"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/core/__init__.py": {
+    "mtime": 1779257196.0431886,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/services/search.py": {
+    "mtime": 1779263139.2253976,
+    "ast_hash": "9d046af338f4160a7e05efb23b02eabd",
+    "semantic_hash": "9d046af338f4160a7e05efb23b02eabd"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/services/wiki_ai.py": {
+    "mtime": 1779267024.6632707,
+    "ast_hash": "57a5b0e8bedc6a2fdc6440ddb7c94a6c",
+    "semantic_hash": "57a5b0e8bedc6a2fdc6440ddb7c94a6c"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/services/__init__.py": {
+    "mtime": 1779257196.043393,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/app/utils/__init__.py": {
+    "mtime": 1779257196.043393,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/alembic/env.py": {
+    "mtime": 1779257196.0429235,
+    "ast_hash": "99162b643f6883d973e030b8ef5b270e",
+    "semantic_hash": "99162b643f6883d973e030b8ef5b270e"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/alembic/__init__.py": {
+    "mtime": 1779257196.0428398,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/alembic/versions/001_initial_wiki_schema.py": {
+    "mtime": 1779266607.5679238,
+    "ast_hash": "99029e7a982201796de7f32a4130013f",
+    "semantic_hash": "99029e7a982201796de7f32a4130013f"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/meta.json": {
+    "mtime": 1779257196.043864,
+    "ast_hash": "cbdcd7821bd1083c564bdf4ff4a75117",
+    "semantic_hash": "cbdcd7821bd1083c564bdf4ff4a75117"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/tailwind.config.ts": {
+    "mtime": 1779257196.0453224,
+    "ast_hash": "bcafbbf0cfe58aeb67034c286851441d",
+    "semantic_hash": "bcafbbf0cfe58aeb67034c286851441d"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/postcss.config.mjs": {
+    "mtime": 1779257196.0443943,
+    "ast_hash": "fe13e972825095c90d22b2112d757993",
+    "semantic_hash": "fe13e972825095c90d22b2112d757993"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/tsconfig.json": {
+    "mtime": 1779257196.0453224,
+    "ast_hash": "3bd7a3770c6b44dbcaab1d2f175db8bd",
+    "semantic_hash": "3bd7a3770c6b44dbcaab1d2f175db8bd"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/next.config.js": {
+    "mtime": 1779257196.0443943,
+    "ast_hash": "13fbb9936a12daacc1b5f95f1a1c602e",
+    "semantic_hash": "13fbb9936a12daacc1b5f95f1a1c602e"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/package.json": {
+    "mtime": 1779257196.0443943,
+    "ast_hash": "b9064fd9262cdacd0e255f6b163326f1",
+    "semantic_hash": "b9064fd9262cdacd0e255f6b163326f1"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/next-env.d.ts": {
+    "mtime": 1779257196.0443943,
+    "ast_hash": "3cf36e94213e85dc306ec5f3f3760ecc",
+    "semantic_hash": "3cf36e94213e85dc306ec5f3f3760ecc"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/public/dclaw-manifest.json": {
+    "mtime": 1779263047.0389245,
+    "ast_hash": "d1f98240bf8b1be8aceabd483c31b94a",
+    "semantic_hash": "d1f98240bf8b1be8aceabd483c31b94a"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/components/wiki-copilot.tsx": {
+    "mtime": 1779267074.609825,
+    "ast_hash": "9fbb8dac166f3696ad92f838a3873582",
+    "semantic_hash": "9fbb8dac166f3696ad92f838a3873582"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/components/search-bar.tsx": {
+    "mtime": 1779266935.5603986,
+    "ast_hash": "b308f913dfc2e5d9fdd6de13b9b96d2e",
+    "semantic_hash": "b308f913dfc2e5d9fdd6de13b9b96d2e"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/components/wiki-sidebar.tsx": {
+    "mtime": 1779267239.3573,
+    "ast_hash": "5471d790c0eb0dde283a47eecf245dfa",
+    "semantic_hash": "5471d790c0eb0dde283a47eecf245dfa"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/components/restore-button.tsx": {
+    "mtime": 1779266922.1863022,
+    "ast_hash": "33b03113f5e1806843d6d1452be8ee46",
+    "semantic_hash": "33b03113f5e1806843d6d1452be8ee46"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/components/page-editor.tsx": {
+    "mtime": 1779266890.2146063,
+    "ast_hash": "29750db7970ac3f3492f552fe9a02f08",
+    "semantic_hash": "29750db7970ac3f3492f552fe9a02f08"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/components/page-tree.tsx": {
+    "mtime": 1779266639.5795002,
+    "ast_hash": "9c75006b83100808995405a9aa2e0108",
+    "semantic_hash": "9c75006b83100808995405a9aa2e0108"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/components/ui/label.tsx": {
+    "mtime": 1779257196.045,
+    "ast_hash": "874216b95b72f23579a562f78955a276",
+    "semantic_hash": "874216b95b72f23579a562f78955a276"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/components/ui/input.tsx": {
+    "mtime": 1779257196.045,
+    "ast_hash": "20c7d814efed7c1cb30937a9bcca5089",
+    "semantic_hash": "20c7d814efed7c1cb30937a9bcca5089"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/components/ui/avatar.tsx": {
+    "mtime": 1779257196.0449524,
+    "ast_hash": "cd70cb254ea891a7d55c64a2304a8196",
+    "semantic_hash": "cd70cb254ea891a7d55c64a2304a8196"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/components/ui/button.tsx": {
+    "mtime": 1779257196.045,
+    "ast_hash": "97b90752432a6ed8629f9774424d2ebe",
+    "semantic_hash": "97b90752432a6ed8629f9774424d2ebe"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/components/ui/tabs.tsx": {
+    "mtime": 1779257196.045,
+    "ast_hash": "7d4fe584503dc4122d11418239e05f98",
+    "semantic_hash": "7d4fe584503dc4122d11418239e05f98"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/components/ui/dialog.tsx": {
+    "mtime": 1779257196.045,
+    "ast_hash": "6394d8caae9db6ca79e465921a839982",
+    "semantic_hash": "6394d8caae9db6ca79e465921a839982"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/components/ui/select.tsx": {
+    "mtime": 1779257196.045,
+    "ast_hash": "e47ac9814247139df2ab1d7d233fa453",
+    "semantic_hash": "e47ac9814247139df2ab1d7d233fa453"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/components/ui/card.tsx": {
+    "mtime": 1779257196.045,
+    "ast_hash": "7e91edc9bf303578c1e7bcdde9366134",
+    "semantic_hash": "7e91edc9bf303578c1e7bcdde9366134"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/components/ui/badge.tsx": {
+    "mtime": 1779257196.045,
+    "ast_hash": "b23999a2d3f73b74d46c949dfa469552",
+    "semantic_hash": "b23999a2d3f73b74d46c949dfa469552"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/components/ui/table.tsx": {
+    "mtime": 1779257196.045,
+    "ast_hash": "0d12893a077e8a94c0b4ec6b8d16e1dc",
+    "semantic_hash": "0d12893a077e8a94c0b4ec6b8d16e1dc"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/app/layout.tsx": {
+    "mtime": 1779267081.255283,
+    "ast_hash": "3cfb84180ae2569a776a724a5359338a",
+    "semantic_hash": "3cfb84180ae2569a776a724a5359338a"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/app/page.tsx": {
+    "mtime": 1779266661.8349857,
+    "ast_hash": "da2e67cad3ae08934ac22fe908043ba5",
+    "semantic_hash": "da2e67cad3ae08934ac22fe908043ba5"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/app/wiki/layout.tsx": {
+    "mtime": 1779266832.8494859,
+    "ast_hash": "cdabafeb6f8281ba827476d4b1426143",
+    "semantic_hash": "cdabafeb6f8281ba827476d4b1426143"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/app/wiki/page.tsx": {
+    "mtime": 1779267226.2195263,
+    "ast_hash": "f6c341664643c43a73c149e5e1270157",
+    "semantic_hash": "f6c341664643c43a73c149e5e1270157"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/app/wiki/new/page.tsx": {
+    "mtime": 1779266895.9000936,
+    "ast_hash": "e140a1ec70e03a5e3d16f8a208b85cdd",
+    "semantic_hash": "e140a1ec70e03a5e3d16f8a208b85cdd"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/app/wiki/[id]/page.tsx": {
+    "mtime": 1779266875.6173387,
+    "ast_hash": "3db67de678f05e5327166178e43cd88d",
+    "semantic_hash": "3db67de678f05e5327166178e43cd88d"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/app/wiki/[id]/history/page.tsx": {
+    "mtime": 1779266914.431658,
+    "ast_hash": "1c6a5f251964a24f6e52aeeab4426613",
+    "semantic_hash": "1c6a5f251964a24f6e52aeeab4426613"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/app/wiki/[id]/edit/page.tsx": {
+    "mtime": 1779266902.0036128,
+    "ast_hash": "5e69d310ce588f164b549ad2f474e6f9",
+    "semantic_hash": "5e69d310ce588f164b549ad2f474e6f9"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/app/dashboard/page.tsx": {
+    "mtime": 1779267212.2956955,
+    "ast_hash": "8c97c939d5b244fb683d2c946ebd1326",
+    "semantic_hash": "8c97c939d5b244fb683d2c946ebd1326"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/lib/utils.ts": {
+    "mtime": 1779257196.0453224,
+    "ast_hash": "ea1c194ee828369e6fcdde84b4d8b8ba",
+    "semantic_hash": "ea1c194ee828369e6fcdde84b4d8b8ba"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/frontend/src/lib/api.ts": {
+    "mtime": 1779267051.361195,
+    "ast_hash": "9c2c6c68d705d4c168109ad81510572d",
+    "semantic_hash": "9c2c6c68d705d4c168109ad81510572d"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/PRODUCT-SPEC.md": {
+    "mtime": 1779257196.0419235,
+    "ast_hash": "4bce446a6939fdb0a07ce9a13bb8628e",
+    "semantic_hash": "4bce446a6939fdb0a07ce9a13bb8628e"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/SCALING-PLAYBOOK.md": {
+    "mtime": 1779257196.0419235,
+    "ast_hash": "a0c71a78655fd06053a1109e3d85ebca",
+    "semantic_hash": "a0c71a78655fd06053a1109e3d85ebca"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docker-compose.yml": {
+    "mtime": 1779257196.0435977,
+    "ast_hash": "0aaab7bce1cd25b0f8900c1b13226ceb",
+    "semantic_hash": "0aaab7bce1cd25b0f8900c1b13226ceb"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/PATCHES.md": {
+    "mtime": 1779257196.0419235,
+    "ast_hash": "991733c05665246cf2093b4e5727a8f8",
+    "semantic_hash": "991733c05665246cf2093b4e5727a8f8"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/REVISED-PRD.md": {
+    "mtime": 1779257196.0419235,
+    "ast_hash": "5fc33c9ff7866f52503151570e940fcb",
+    "semantic_hash": "5fc33c9ff7866f52503151570e940fcb"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/README.md": {
+    "mtime": 1779257196.0419235,
+    "ast_hash": "542bd6f2b6ba6c6f8b8de12d476da3b7",
+    "semantic_hash": "542bd6f2b6ba6c6f8b8de12d476da3b7"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/AGENTS.md": {
+    "mtime": 1779257196.0419235,
+    "ast_hash": "60409d41846bab4ce4ca03df05ae43eb",
+    "semantic_hash": "60409d41846bab4ce4ca03df05ae43eb"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/PLAN-v1.2.md": {
+    "mtime": 1779267319.6448314,
+    "ast_hash": "1596b9e5ed1a3563e593256d466a78e0",
+    "semantic_hash": "1596b9e5ed1a3563e593256d466a78e0"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/AGENT-PROMPTS.md": {
+    "mtime": 1779257196.0419235,
+    "ast_hash": "575029013c93c0caddbb2c5fdcacda8b",
+    "semantic_hash": "575029013c93c0caddbb2c5fdcacda8b"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/PATCH-2026-05-15-shared-hub-postgres.md": {
+    "mtime": 1779257196.0419235,
+    "ast_hash": "9ca6f76d54df4d000849af7a3fcb54eb",
+    "semantic_hash": "9ca6f76d54df4d000849af7a3fcb54eb"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/TEAM-ONBOARDING-GUIDE.md": {
+    "mtime": 1779257196.0419235,
+    "ast_hash": "dbd8f5d3dafd8e6c8eb668ffa3e748be",
+    "semantic_hash": "dbd8f5d3dafd8e6c8eb668ffa3e748be"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/CLAUDE.md": {
+    "mtime": 1779257412.248913,
+    "ast_hash": "fae7ade95f1f853b450675384a0f107c",
+    "semantic_hash": "fae7ade95f1f853b450675384a0f107c"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/.github/workflows/claude-code-review.yml": {
+    "mtime": 1779257196.0419235,
+    "ast_hash": "5079400de856707524c884e89e366799",
+    "semantic_hash": "5079400de856707524c884e89e366799"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/.github/workflows/claude.yml": {
+    "mtime": 1779257196.0419235,
+    "ast_hash": "995b9db52dace3af043903f678a61551",
+    "semantic_hash": "995b9db52dace3af043903f678a61551"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/.github/workflows/ci.yml": {
+    "mtime": 1779257196.0418487,
+    "ast_hash": "18675c093b7986a8092e68e8bde846e1",
+    "semantic_hash": "18675c093b7986a8092e68e8bde846e1"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/backend/requirements.txt": {
+    "mtime": 1779257196.043393,
+    "ast_hash": "973cb52b26fd448774f049c60feac28f",
+    "semantic_hash": "973cb52b26fd448774f049c60feac28f"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/helm/Chart.yaml": {
+    "mtime": 1779257196.0453224,
+    "ast_hash": "7b8592c9bad67a6ec17aba3b3c450fff",
+    "semantic_hash": "7b8592c9bad67a6ec17aba3b3c450fff"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/helm/values.yaml": {
+    "mtime": 1779257196.045655,
+    "ast_hash": "241fcf0132a2674f26fbf18d4febeb0c",
+    "semantic_hash": "241fcf0132a2674f26fbf18d4febeb0c"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/helm/templates/deployment.yaml": {
+    "mtime": 1779257196.045655,
+    "ast_hash": "d9e04cbcdbe7f1a0483040f90d4c07ae",
+    "semantic_hash": "d9e04cbcdbe7f1a0483040f90d4c07ae"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/helm/templates/service.yaml": {
+    "mtime": 1779257196.045655,
+    "ast_hash": "3c871e3de514581590418a3fc6aa7067",
+    "semantic_hash": "3c871e3de514581590418a3fc6aa7067"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/helm/templates/NOTES.txt": {
+    "mtime": 1779257196.0455027,
+    "ast_hash": "0d8c686e4a08a665267d3d8fe03707c9",
+    "semantic_hash": "0d8c686e4a08a665267d3d8fe03707c9"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/helm/dclaw-wiki/Chart.yaml": {
+    "mtime": 1779257196.0454326,
+    "ast_hash": "2d53cad63408e3ff9f210ca12f9c1dc4",
+    "semantic_hash": "2d53cad63408e3ff9f210ca12f9c1dc4"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/helm/dclaw-wiki/values.yaml": {
+    "mtime": 1779257196.0455027,
+    "ast_hash": "2531a5ded8b30f9128bd9e17bbb03e93",
+    "semantic_hash": "2531a5ded8b30f9128bd9e17bbb03e93"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/helm/dclaw-wiki/templates/deployment.yaml": {
+    "mtime": 1779257196.0455027,
+    "ast_hash": "d073207a2461ed42171dc9de3b8b0e9f",
+    "semantic_hash": "d073207a2461ed42171dc9de3b8b0e9f"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/helm/dclaw-wiki/templates/service.yaml": {
+    "mtime": 1779257196.0455027,
+    "ast_hash": "823e206fde9e81dcaacb14b744bc6b30",
+    "semantic_hash": "823e206fde9e81dcaacb14b744bc6b30"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/helm/dclaw-wiki/templates/ingress.yaml": {
+    "mtime": 1779257196.0455027,
+    "ast_hash": "71de58954d05342bdd2e441e6d999dc7",
+    "semantic_hash": "71de58954d05342bdd2e441e6d999dc7"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/helm/dclaw-wiki/templates/serviceaccount.yaml": {
+    "mtime": 1779257196.0455027,
+    "ast_hash": "bc700e03ed772a488e7a2455ef0f2423",
+    "semantic_hash": "bc700e03ed772a488e7a2455ef0f2423"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/README.md": {
+    "mtime": 1779257196.0435977,
+    "ast_hash": "241888b489c2bcf7f53419a226383076",
+    "semantic_hash": "241888b489c2bcf7f53419a226383076"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/getting-started/installation.md": {
+    "mtime": 1779257196.0437617,
+    "ast_hash": "802a8386f4deb894546837f6734be9fe",
+    "semantic_hash": "802a8386f4deb894546837f6734be9fe"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/getting-started/configuration.md": {
+    "mtime": 1779257196.043727,
+    "ast_hash": "92a5b9e928e482da4e20e68feae50a23",
+    "semantic_hash": "92a5b9e928e482da4e20e68feae50a23"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/getting-started/index.md": {
+    "mtime": 1779257196.0437617,
+    "ast_hash": "f0afdf60fc5954b4a276e4d1b0e8609b",
+    "semantic_hash": "f0afdf60fc5954b4a276e4d1b0e8609b"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/getting-started/quickstart.md": {
+    "mtime": 1779257196.0437617,
+    "ast_hash": "8b91bfdb9d934239a7380dae062c5592",
+    "semantic_hash": "8b91bfdb9d934239a7380dae062c5592"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/releases/index.md": {
+    "mtime": 1779257196.0440638,
+    "ast_hash": "00bd343cb39e199a5f02b58921b0614c",
+    "semantic_hash": "00bd343cb39e199a5f02b58921b0614c"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/releases/changelog.md": {
+    "mtime": 1779257196.0439596,
+    "ast_hash": "a40f4eb48f38d4b6097071645a35a4dc",
+    "semantic_hash": "a40f4eb48f38d4b6097071645a35a4dc"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/releases/roadmap.md": {
+    "mtime": 1779257196.0440638,
+    "ast_hash": "2177d911629a959b0f962cb5fa9acdd7",
+    "semantic_hash": "2177d911629a959b0f962cb5fa9acdd7"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/troubleshooting/faq.md": {
+    "mtime": 1779257196.044311,
+    "ast_hash": "af7cdf8d70b780c9330c05f90128326b",
+    "semantic_hash": "af7cdf8d70b780c9330c05f90128326b"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/troubleshooting/index.md": {
+    "mtime": 1779257196.044311,
+    "ast_hash": "29282ab5cdd33b7bb5d2e30827579f3d",
+    "semantic_hash": "29282ab5cdd33b7bb5d2e30827579f3d"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/troubleshooting/common-issues.md": {
+    "mtime": 1779257196.0440638,
+    "ast_hash": "9161fc8903b7c12526ebb53bab044774",
+    "semantic_hash": "9161fc8903b7c12526ebb53bab044774"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/reference/architecture.md": {
+    "mtime": 1779257196.0439596,
+    "ast_hash": "aaaa1f2073d4ec49807fe838e2b916a0",
+    "semantic_hash": "aaaa1f2073d4ec49807fe838e2b916a0"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/reference/api.md": {
+    "mtime": 1779257196.043864,
+    "ast_hash": "047bcec31c865b214b2067084bc24c54",
+    "semantic_hash": "047bcec31c865b214b2067084bc24c54"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/reference/stack.md": {
+    "mtime": 1779257196.0439596,
+    "ast_hash": "d266c5176d35b210e50acfdcd2503858",
+    "semantic_hash": "d266c5176d35b210e50acfdcd2503858"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/reference/index.md": {
+    "mtime": 1779257196.0439596,
+    "ast_hash": "cbbb8b1691a37d6b8f05f8fdc13bb68b",
+    "semantic_hash": "cbbb8b1691a37d6b8f05f8fdc13bb68b"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/guides/index.md": {
+    "mtime": 1779257196.043864,
+    "ast_hash": "1ff83a516780fff9f3d857f8e9144286",
+    "semantic_hash": "1ff83a516780fff9f3d857f8e9144286"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/guides/best-practices.md": {
+    "mtime": 1779257196.0437617,
+    "ast_hash": "f1fef7472c1340b058b3708c20101218",
+    "semantic_hash": "f1fef7472c1340b058b3708c20101218"
+  },
+  "/home/siddharth/Desktop/dclaw/dclaw-wiki/docs/guides/use-cases.md": {
+    "mtime": 1779257196.043864,
+    "ast_hash": "939d3808860d79ca8ff61f23e91146a2",
+    "semantic_hash": "939d3808860d79ca8ff61f23e91146a2"
+  }
+}

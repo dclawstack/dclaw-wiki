@@ -1,93 +1,121 @@
-"use client";
+import Link from "next/link";
+import { listPages, type PageRead } from "@/lib/api";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { SearchBar } from "@/components/search-bar";
 
-import React, { useState } from "react";
-import { BookOpen } from "lucide-react";
+export const dynamic = "force-dynamic";
 
-export default function DashboardPage() {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState<{
-    topArticle: string;
-    relatedPages: string[];
-    lastEditedBy: string;
-  } | null>(null);
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
 
-  const handleSearch = () => {
-    setResults({
-      topArticle: `How to use ${query || "DClaw Wiki"}`,
-      relatedPages: ["Getting Started", "Advanced Search", "Contributing Guide"],
-      lastEditedBy: "Alice",
-    });
-  };
+export default async function Dashboard() {
+  let pages: PageRead[] = [];
+  let error = null;
+  try {
+    pages = await listPages();
+  } catch {
+    error = "Could not connect to backend.";
+  }
+
+  const recentPages = [...pages]
+    .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
+    .slice(0, 8);
 
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-8">
-      <div className="mx-auto max-w-4xl">
-        <div className="mb-8 flex items-center gap-3">
-          <BookOpen className="h-8 w-8 text-[#06B6D4]" />
-          <h1 className="text-2xl font-bold text-gray-900">Wiki Dashboard</h1>
+    <main className="min-h-screen p-8">
+      <div className="max-w-5xl mx-auto space-y-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-[var(--text)]">Dashboard</h1>
+            <p className="text-[var(--text-muted)] mt-1">Overview of your wiki</p>
+          </div>
+          <Link href="/wiki/new">
+            <Button>+ New Page</Button>
+          </Link>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-200">
-            <h2 className="mb-4 text-lg font-semibold text-gray-900">
-              Search Wiki
-            </h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Search wiki
-                </label>
-                <input
-                  type="text"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="e.g. onboarding"
-                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-[#06B6D4] focus:outline-none focus:ring-1 focus:ring-[#06B6D4]"
-                />
-              </div>
-              <button
-                onClick={handleSearch}
-                className="inline-flex w-full justify-center rounded-lg bg-[#06B6D4] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
-              >
-                Search
-              </button>
+        <div className="w-full max-w-md">
+          <SearchBar />
+        </div>
+
+        {error && (
+          <div className="rounded-md bg-[var(--error-bg)] border border-[var(--error-border)] p-4 text-sm text-[var(--error-text)]">
+            {error}
+          </div>
+        )}
+
+        {/* Stats */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <Card className="bg-[var(--content-bg)] border-[var(--content-border)]">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm text-[var(--text-muted)] font-normal">Total Pages</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-3xl font-bold text-[var(--stat-color)]">{pages.length}</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-[var(--content-bg)] border-[var(--content-border)]">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm text-[var(--text-muted)] font-normal">Root Pages</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-3xl font-bold text-[var(--stat-color)]">{pages.filter((p) => !p.parent_id).length}</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-[var(--content-bg)] border-[var(--content-border)]">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm text-[var(--text-muted)] font-normal">Nested Pages</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-3xl font-bold text-[var(--stat-color)]">{pages.filter((p) => p.parent_id).length}</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Recent pages */}
+        <section>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-semibold text-[var(--text)]">Recently Updated</h2>
+            <Link href="/wiki" className="text-sm text-[var(--accent-col)] hover:underline">
+              View all →
+            </Link>
+          </div>
+          {recentPages.length === 0 ? (
+            <Card className="bg-[var(--content-bg)] border-[var(--content-border)]">
+              <CardContent className="pt-8 pb-8 text-center text-[var(--text-muted)]">
+                <p className="mb-4">No pages yet. Start building your wiki.</p>
+                <Link href="/wiki/new">
+                  <Button variant="outline">Create First Page</Button>
+                </Link>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="space-y-2">
+              {recentPages.map((page) => (
+                <Link key={page.id} href={`/wiki/${page.id}`} className="block group">
+                  <div className="flex items-center justify-between rounded-lg border border-[var(--content-border)] bg-[var(--content-bg)] px-4 py-3 hover:border-[var(--accent-col)] hover:shadow-sm transition">
+                    <div className="flex items-center gap-3">
+                      <span className="font-medium text-[var(--text)] group-hover:text-[var(--accent-col)]">
+                        {page.title}
+                      </span>
+                      {page.parent_id && (
+                        <Badge variant="secondary" className="text-xs">Nested</Badge>
+                      )}
+                    </div>
+                    <span className="text-xs text-[var(--text-muted)]">{formatDate(page.updated_at)}</span>
+                  </div>
+                </Link>
+              ))}
             </div>
-          </div>
-
-          <div className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-200">
-            <h2 className="mb-4 text-lg font-semibold text-gray-900">
-              Search Results
-            </h2>
-            {results ? (
-              <div className="space-y-4">
-                <div className="rounded-lg bg-gray-50 p-4">
-                  <p className="text-sm text-gray-500">Top article</p>
-                  <p className="text-lg font-semibold text-[#06B6D4]">
-                    {results.topArticle}
-                  </p>
-                </div>
-                <div className="rounded-lg bg-gray-50 p-4">
-                  <p className="text-sm text-gray-500">Related pages</p>
-                  <ul className="mt-1 list-inside list-disc text-sm text-gray-700">
-                    {results.relatedPages.map((p, i) => (
-                      <li key={i}>{p}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="rounded-lg bg-gray-50 p-4">
-                  <p className="text-sm text-gray-500">Last edited by</p>
-                  <p className="text-lg font-semibold text-[#06B6D4]">
-                    {results.lastEditedBy}
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <p className="text-sm text-gray-500">
-                Enter a query and click Search to see results.
-              </p>
-            )}
-          </div>
-        </div>
+          )}
+        </section>
       </div>
     </main>
   );

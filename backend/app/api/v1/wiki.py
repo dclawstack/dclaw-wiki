@@ -1,63 +1,81 @@
-import uuid
-from datetime import datetime, timezone
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from fastapi import APIRouter
-from pydantic import BaseModel
+from app.core.database import get_db
+from app.repositories.wiki_repo import WikiRepository
+from app.schemas.wiki import PageCreate, PageUpdate, PageRead, PageTree
 
 router = APIRouter()
 
 
-class CreatePageRequest(BaseModel):
-    title: str
-    content: str
+def _to_tree(pages: list[PageRead]) -> list[PageTree]:
+    """Build a nested tree from a flat list of PageRead objects."""
+    lookup: dict[str, PageTree] = {}
+    roots: list[PageTree] = []
+
+    for page in pages:
+        node = PageTree(
+            id=page.id,
+            title=page.title,
+            parent_id=page.parent_id,
+            path=page.path,
+            position=page.position,
+        )
+        lookup[page.id] = node
+
+    for page in pages:
+        node = lookup[page.id]
+        if page.parent_id and page.parent_id in lookup:
+            lookup[page.parent_id].children.append(node)
+        else:
+            roots.append(node)
+
+    return roots
 
 
-class WikiPage(BaseModel):
-    id: str
-    title: str
-    content: str
-    related_pages: list[str]
-    last_edited_by: str
-    created_at: str
+@router.post("/pages", response_model=PageRead, status_code=201)
+async def create_page(body: PageCreate, db: AsyncSession = Depends(get_db)) -> PageRead:
+    repo = WikiRepository(db)
+    page = await repo.create(body)
+    return PageRead.model_validate(page)
 
 
-@router.post("/pages", response_model=WikiPage)
-async def create_page(req: CreatePageRequest) -> WikiPage:
-    return WikiPage(
-        id=str(uuid.uuid4()),
-        title=req.title,
-        content=req.content,
-        related_pages=["Related 1", "Related 2"],
-        last_edited_by="Alice",
-        created_at=datetime.now(timezone.utc).isoformat(),
-    )
+@router.get("/pages", response_model=list[PageRead])
+async def list_pages(db: AsyncSession = Depends(get_db)) -> list[PageRead]:
+    repo = WikiRepository(db)
+    pages = await repo.list_all()
+    return [PageRead.model_validate(p) for p in pages]
 
 
-@router.get("/pages/search", response_model=list[WikiPage])
-async def search_pages(q: str) -> list[WikiPage]:
-    return [
-        WikiPage(
-            id=str(uuid.uuid4()),
-            title=f"Result for {q} — 1",
-            content="Sample content 1",
-            related_pages=["Related A"],
-            last_edited_by="Alice",
-            created_at=datetime.now(timezone.utc).isoformat(),
-        ),
-        WikiPage(
-            id=str(uuid.uuid4()),
-            title=f"Result for {q} — 2",
-            content="Sample content 2",
-            related_pages=["Related B"],
-            last_edited_by="Bob",
-            created_at=datetime.now(timezone.utc).isoformat(),
-        ),
-        WikiPage(
-            id=str(uuid.uuid4()),
-            title=f"Result for {q} — 3",
-            content="Sample content 3",
-            related_pages=["Related C"],
-            last_edited_by="Charlie",
-            created_at=datetime.now(timezone.utc).isoformat(),
-        ),
-    ]
+@router.get("/pages/tree", response_model=list[PageTree])
+async def get_tree(db: AsyncSession = Depends(get_db)) -> list[PageTree]:
+    repo = WikiRepository(db)
+    pages = await repo.list_all()
+    page_reads = [PageRead.model_validate(p) for p in pages]
+    return _to_tree(page_reads)
+
+
+@router.get("/pages/{page_id}", response_model=PageRead)
+async def get_page(page_id: str, db: AsyncSession = Depends(get_db)) -> PageRead:
+    repo = WikiRepository(db)
+    page = await repo.get(page_id)
+    if not page:
+        raise HTTPException(status_code=404, detail="Page not found")
+    return PageRead.model_validate(page)
+
+
+@router.patch("/pages/{page_id}", response_model=PageRead)
+async def update_page(page_id: str, body: PageUpdate, db: AsyncSession = Depends(get_db)) -> PageRead:
+    repo = WikiRepository(db)
+    page = await repo.update(page_id, body)
+    if not page:
+        raise HTTPException(status_code=404, detail="Page not found")
+    return PageRead.model_validate(page)
+
+
+@router.delete("/pages/{page_id}", status_code=204)
+async def delete_page(page_id: str, db: AsyncSession = Depends(get_db)) -> None:
+    repo = WikiRepository(db)
+    deleted = await repo.delete(page_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Page not found")
