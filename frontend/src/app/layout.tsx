@@ -1,9 +1,7 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
-import { WikiCopilot } from "@/components/wiki-copilot"
 import { ThemeProvider } from "@/components/ThemeProvider"
-import { HeaderNav } from "@/components/HeaderNav"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -20,11 +18,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body className={inter.className}>
         <ThemeProvider>
-          <div className="min-h-screen bg-[var(--bg)]">
-            <HeaderNav />
-            <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">{children}</main>
-          </div>
-          <WikiCopilot />
+          {children}
         </ThemeProvider>
       </body>
     </html>
