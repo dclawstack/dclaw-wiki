@@ -94,7 +94,7 @@ export default function AskPage() {
                 {result.sources.map((s) => (
                   <li key={s.n}>
                     <span className="text-[var(--text-muted)]">[{s.n}]</span>{" "}
-                    <a href={`/knowledge/${s.documentId}`} className="text-[var(--accent-col)] hover:underline">{s.title}</a>
+                    <a href={`/wiki/${s.documentId}`} className="text-[var(--accent-col)] hover:underline">{s.title}</a>
                   </li>
                 ))}
               </ul>

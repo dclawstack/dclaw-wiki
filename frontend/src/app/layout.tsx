@@ -3,6 +3,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/ThemeProvider"
 import { HeaderNav } from "@/components/HeaderNav"
+import { Copilot } from "@/components/copilot"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <HeaderNav />
             <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">{children}</main>
           </div>
+          <Copilot />
         </ThemeProvider>
       </body>
     </html>

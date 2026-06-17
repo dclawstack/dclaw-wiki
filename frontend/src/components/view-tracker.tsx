@@ -1,12 +1,10 @@
 "use client";
 
 import { useEffect } from "react";
-import { recordPageView } from "@/lib/api";
 
-/** Fires a single page-view analytics event on mount. Renders nothing. */
-export function ViewTracker({ pageId }: { pageId: string }) {
+export function ViewTracker({ documentId }: { documentId: string }) {
   useEffect(() => {
-    recordPageView(pageId).catch(() => {});
-  }, [pageId]);
+    fetch(`/api/pages/${documentId}/view`, { method: "POST" }).catch(() => {});
+  }, [documentId]);
   return null;
 }

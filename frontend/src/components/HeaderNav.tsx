@@ -5,8 +5,10 @@ import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 const NAV_ITEMS = [
+  { href: "/wiki", label: "Wiki" },
   { href: "/ask", label: "Ask" },
-  { href: "/knowledge", label: "Knowledge" },
+  { href: "/templates", label: "Templates" },
+  { href: "/dashboard", label: "Dashboard" },
   { href: "/gaps", label: "Gaps" },
 ];
 

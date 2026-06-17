@@ -23,6 +23,10 @@ export const documents = pgTable("documents", {
   content: text("content").notNull().default(""),
   source: text("source").notNull().default("manual"), // manual | import | github | slack
   sourceRef: text("source_ref"),
+  // Hierarchy (a document IS a wiki page)
+  parentId: uuid("parent_id"),
+  path: text("path").notNull().default("/"),
+  position: integer("position").notNull().default(0),
   createdBy: text("created_by"),
   tags: jsonb("tags").$type<string[]>().notNull().default(sql`'[]'::jsonb`),
   // Trust / freshness
@@ -93,6 +97,43 @@ export const knowledgeGaps = pgTable("knowledge_gaps", {
   lastSeen: timestamp("last_seen").notNull().defaultNow(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
+
+// ── Wiki: revisions, comments, page views ───────────────────────────────────
+export const revisions = pgTable("revisions", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  documentId: uuid("document_id")
+    .notNull()
+    .references(() => documents.id, { onDelete: "cascade" }),
+  revisionNumber: integer("revision_number").notNull().default(1),
+  title: text("title").notNull(),
+  content: text("content").notNull().default(""),
+  changeSummary: text("change_summary"),
+  changedBy: text("changed_by"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export const comments = pgTable("comments", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  documentId: uuid("document_id")
+    .notNull()
+    .references(() => documents.id, { onDelete: "cascade" }),
+  body: text("body").notNull(),
+  author: text("author"),
+  resolved: boolean("resolved").notNull().default(false),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export const pageViews = pgTable(
+  "page_views",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    documentId: uuid("document_id")
+      .notNull()
+      .references(() => documents.id, { onDelete: "cascade" }),
+    viewedAt: timestamp("viewed_at").notNull().defaultNow(),
+  },
+  (t) => ({ pvDoc: index("page_views_document_id_idx").on(t.documentId) }),
+);
 
 // ── Build self-tracking (roadmap / progress / metrics live IN the DB) ────────
 export const roadmap = pgTable("roadmap", {

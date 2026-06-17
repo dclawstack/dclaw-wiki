@@ -8,6 +8,13 @@
       "when": 1781691370423,
       "tag": "0000_init_trust_loop",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1781693174932,
+      "tag": "0001_wiki_pages",
+      "breakpoints": true
     }
   ]
 }

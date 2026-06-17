@@ -17,7 +17,7 @@ export default function Home() {
         </p>
         <div className="flex justify-center gap-3 pt-2">
           <Link href="/ask"><Button size="lg">Ask a question</Button></Link>
-          <Link href="/knowledge"><Button size="lg" variant="outline">Add knowledge</Button></Link>
+          <Link href="/wiki"><Button size="lg" variant="outline">Browse the wiki</Button></Link>
         </div>
       </div>
 
