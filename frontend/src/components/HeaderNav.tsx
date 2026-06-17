@@ -5,11 +5,9 @@ import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 const NAV_ITEMS = [
-  { href: "/wiki", label: "Wiki" },
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/wiki/templates", label: "Templates" },
-  { href: "/analytics", label: "Analytics" },
-  { href: "/maintenance", label: "Maintenance" },
+  { href: "/ask", label: "Ask" },
+  { href: "/knowledge", label: "Knowledge" },
+  { href: "/gaps", label: "Gaps" },
 ];
 
 export function HeaderNav() {
