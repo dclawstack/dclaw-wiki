@@ -127,3 +127,7 @@ The app supports dark and light modes with two accent colours:
 | `--accent-col` | `#06b6d4` | `#22d3ee` |
 
 Toggle via the sun/moon button in the header. Preference is saved in `localStorage`.
+
+## Code Manager
+
+Tharuni Dayara — tharunidayara@gmail.com
