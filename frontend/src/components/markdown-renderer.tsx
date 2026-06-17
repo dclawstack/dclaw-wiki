@@ -6,6 +6,18 @@ import remarkGfm from "remark-gfm";
 import hljs from "highlight.js/lib/common";
 import mermaid from "mermaid";
 import "highlight.js/styles/github-dark.css";
+import { slugify } from "@/lib/toc";
+
+/** Flatten React children to plain text for slugging heading anchors. */
+function toText(children: React.ReactNode): string {
+  if (typeof children === "string") return children;
+  if (typeof children === "number") return String(children);
+  if (Array.isArray(children)) return children.map(toText).join("");
+  if (children && typeof children === "object" && "props" in children) {
+    return toText((children as { props: { children?: React.ReactNode } }).props.children);
+  }
+  return "";
+}
 
 mermaid.initialize({ startOnLoad: false, securityLevel: "strict", theme: "default" });
 
@@ -87,9 +99,9 @@ export function MarkdownRenderer({ content }: { content: string }) {
             if (match[1] === "video") return <VideoEmbed url={raw.trim()} />;
             return <CodeBlock lang={match[1]} raw={raw} />;
           },
-          h1: ({ children }) => <h1 className="mt-6 mb-3 text-2xl font-bold">{children}</h1>,
-          h2: ({ children }) => <h2 className="mt-6 mb-3 text-xl font-bold">{children}</h2>,
-          h3: ({ children }) => <h3 className="mt-4 mb-2 text-lg font-semibold">{children}</h3>,
+          h1: ({ children }) => <h1 id={slugify(toText(children))} className="mt-6 mb-3 scroll-mt-20 text-2xl font-bold">{children}</h1>,
+          h2: ({ children }) => <h2 id={slugify(toText(children))} className="mt-6 mb-3 scroll-mt-20 text-xl font-bold">{children}</h2>,
+          h3: ({ children }) => <h3 id={slugify(toText(children))} className="mt-4 mb-2 scroll-mt-20 text-lg font-semibold">{children}</h3>,
           p: ({ children }) => <p className="my-3">{children}</p>,
           ul: ({ children }) => <ul className="my-3 list-disc space-y-1 pl-6">{children}</ul>,
           ol: ({ children }) => <ol className="my-3 list-decimal space-y-1 pl-6">{children}</ol>,

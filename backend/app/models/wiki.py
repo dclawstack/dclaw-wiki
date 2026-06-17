@@ -1,7 +1,7 @@
 import uuid
 from typing import Optional
 
-from sqlalchemy import ForeignKey, String, Text, Integer
+from sqlalchemy import ForeignKey, String, Text, Integer, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import Base
@@ -27,6 +27,14 @@ class WikiPage(Base):
 
     created_at: Mapped[datetime] = mapped_column(nullable=False, default=utc_now)
     updated_at: Mapped[datetime] = mapped_column(nullable=False, default=utc_now, onupdate=utc_now)
+
+    # Trust / freshness metadata (v2.0 roadmap 0.5)
+    tags: Mapped[list[str]] = mapped_column(JSON, nullable=False, default=list)
+    verified_at: Mapped[Optional[datetime]] = mapped_column(nullable=True)
+    verified_by: Mapped[Optional[str]] = mapped_column(String(256), nullable=True)
+    freshness_state: Mapped[str] = mapped_column(
+        String(32), nullable=False, default="unknown", server_default="unknown"
+    )
 
     # Self-referential relationship
     children: Mapped[list["WikiPage"]] = relationship(

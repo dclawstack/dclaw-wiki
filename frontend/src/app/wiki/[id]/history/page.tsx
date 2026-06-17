@@ -4,6 +4,7 @@ import { getPage, listRevisions } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { RestoreButton } from "@/components/restore-button";
+import { SummarizeButton } from "@/components/summarize-button";
 
 export const dynamic = "force-dynamic";
 
@@ -69,6 +70,11 @@ export default async function HistoryPage({ params }: Props) {
                   {rev.changed_by && <span>{rev.changed_by} · </span>}
                   {formatDate(rev.created_at)}
                 </div>
+                <SummarizeButton
+                  pageId={page.id}
+                  revisionId={rev.id}
+                  initialSummary={rev.change_summary}
+                />
               </div>
               <RestoreButton pageId={page.id} revisionId={rev.id} />
             </div>

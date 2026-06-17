@@ -80,6 +80,23 @@ class WikiAIService:
             if p.id != page_id
         ][:limit]
 
+    async def summarize_change(self, old_content: str, new_content: str) -> dict:
+        """Generate a one-line summary of how a page changed between two versions.
+
+        Returns {"summary": str, "provider": str}.
+        """
+        system_prompt = (
+            "You summarize the difference between two versions of a wiki page in ONE "
+            "concise sentence (max 15 words). State what changed. No preamble, no quotes."
+        )
+        user_prompt = (
+            f"OLD VERSION:\n{old_content[:4000]}\n\n"
+            f"NEW VERSION:\n{new_content[:4000]}\n\n"
+            "One-sentence summary of the change:"
+        )
+        summary, provider = await self._call_llm(system_prompt, user_prompt)
+        return {"summary": summary, "provider": provider}
+
     async def _call_llm(self, system: str, user: str) -> tuple[str, str]:
         """Try OpenRouter first, fall back to Ollama."""
         if settings.openrouter_api_key:

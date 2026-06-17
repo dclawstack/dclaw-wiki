@@ -18,6 +18,8 @@ class ApiError extends Error {
 async function fetchJson<T>(path: string, options?: RequestInit): Promise<T> {
   const url = `${API_BASE}${path}`;
   const response = await fetch(url, {
+    // Dynamic app — never serve stale server-side reads from Next's fetch cache.
+    cache: "no-store",
     headers: {
       "Content-Type": "application/json",
       ...options?.headers,
@@ -48,6 +50,10 @@ export interface PageRead {
   updated_by: string | null;
   created_at: string;
   updated_at: string;
+  tags: string[];
+  verified_at: string | null;
+  verified_by: string | null;
+  freshness_state: string;
 }
 
 export interface PageTree {
@@ -131,6 +137,12 @@ export async function listRevisions(pageId: string): Promise<RevisionRead[]> {
 
 export async function restoreRevision(pageId: string, revisionId: string): Promise<PageRead> {
   return fetchJson<PageRead>(`/api/v1/pages/${pageId}/revisions/${revisionId}/restore`, {
+    method: "POST",
+  });
+}
+
+export async function summarizeRevision(pageId: string, revisionId: string): Promise<RevisionRead> {
+  return fetchJson<RevisionRead>(`/api/v1/pages/${pageId}/revisions/${revisionId}/summarize`, {
     method: "POST",
   });
 }

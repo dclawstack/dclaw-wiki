@@ -7,8 +7,15 @@ import { ViewTracker } from "@/components/view-tracker";
 import { ExportMenu } from "@/components/export-menu";
 import { PublishButton } from "@/components/publish-button";
 import { CommentsSection } from "@/components/comments-section";
+import { TableOfContents } from "@/components/table-of-contents";
 
 export const dynamic = "force-dynamic";
+
+const FRESHNESS_STYLES: Record<string, string> = {
+  fresh: "bg-green-500/15 text-green-600 dark:text-green-400",
+  stale: "bg-amber-500/15 text-amber-600 dark:text-amber-400",
+  unknown: "bg-[var(--surface)] text-[var(--text-muted)]",
+};
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleString("en-US", {
@@ -75,6 +82,21 @@ export default async function WikiPageView({ params }: Props) {
         )}
         <span>· {formatDate(page.updated_at)}</span>
       </div>
+
+      {/* Trust metadata + tags */}
+      <div className="flex items-center gap-2 flex-wrap">
+        <span className={`rounded-full px-2 py-0.5 text-xs font-medium capitalize ${FRESHNESS_STYLES[page.freshness_state] ?? FRESHNESS_STYLES.unknown}`}>
+          {page.freshness_state === "unknown" ? "Unverified" : page.freshness_state}
+        </span>
+        {page.tags?.map((tag) => (
+          <span key={tag} className="rounded-full bg-[var(--surface)] px-2 py-0.5 text-xs text-[var(--text-muted)]">
+            #{tag}
+          </span>
+        ))}
+      </div>
+
+      {/* Table of contents */}
+      <TableOfContents content={page.content} />
 
       {/* Content */}
       <div className="bg-[var(--content-bg)] rounded-lg border border-[var(--content-border)] p-6 min-h-48">
