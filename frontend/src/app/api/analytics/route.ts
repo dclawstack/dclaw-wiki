@@ -1,27 +1,27 @@
 import { NextResponse } from "next/server";
-import { count, desc, eq, sql } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 import { db } from "@/db/client";
-import { documents, pageViews } from "@/db/schema";
 
 export const dynamic = "force-dynamic";
 
-export async function GET() {
-  // NOTE: run sequentially — the neon-http driver returns wrong results when
-  // multiple queries are issued concurrently (Promise.all), so do not batch these.
-  const [{ totalPages }] = await db.select({ totalPages: count() }).from(documents);
-  const [{ totalViews }] = await db.select({ totalViews: count() }).from(pageViews);
-  const popular = await db
-    .select({ documentId: pageViews.documentId, title: documents.title, views: count(pageViews.id) })
-    .from(pageViews)
-    .innerJoin(documents, eq(documents.id, pageViews.documentId))
-    .groupBy(pageViews.documentId, documents.title)
-    .orderBy(desc(count(pageViews.id)))
-    .limit(8);
-  const recentlyUpdated = await db
-    .select({ id: documents.id, title: documents.title, updatedAt: documents.updatedAt })
-    .from(documents)
-    .orderBy(desc(documents.updatedAt))
-    .limit(5);
+function rows<T>(res: unknown): T[] {
+  if (Array.isArray(res)) return res as T[];
+  return (res as { rows?: T[] }).rows ?? [];
+}
 
+// Raw SQL throughout — drizzle's count() helper mis-returned 0 for page_views
+// under neon-http; sequential raw queries are reliable.
+export async function GET() {
+  const totalPages = rows<{ n: number }>(await db.execute(sql`SELECT count(*)::int AS n FROM documents`))[0]?.n ?? 0;
+  const totalViews = rows<{ n: number }>(await db.execute(sql`SELECT count(*)::int AS n FROM page_views`))[0]?.n ?? 0;
+  const popular = rows<{ documentId: string; title: string; views: number }>(
+    await db.execute(sql`
+      SELECT pv.document_id AS "documentId", d.title AS title, count(*)::int AS views
+      FROM page_views pv JOIN documents d ON d.id = pv.document_id
+      GROUP BY pv.document_id, d.title ORDER BY views DESC LIMIT 8`),
+  );
+  const recentlyUpdated = rows<{ id: string; title: string; updatedAt: string }>(
+    await db.execute(sql`SELECT id, title, updated_at AS "updatedAt" FROM documents ORDER BY updated_at DESC LIMIT 5`),
+  );
   return NextResponse.json({ totalPages, totalViews, popular, recentlyUpdated });
 }
