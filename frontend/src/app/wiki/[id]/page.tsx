@@ -2,6 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPage } from "@/lib/api";
 import { Button } from "@/components/ui/button";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { ViewTracker } from "@/components/view-tracker";
+import { ExportMenu } from "@/components/export-menu";
+import { PublishButton } from "@/components/publish-button";
+import { CommentsSection } from "@/components/comments-section";
 
 export const dynamic = "force-dynamic";
 
@@ -29,6 +34,7 @@ export default async function WikiPageView({ params }: Props) {
 
   return (
     <div className="max-w-4xl mx-auto p-8 space-y-6">
+      <ViewTracker pageId={page.id} />
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
         <Link href="/wiki" className="hover:text-[var(--accent-col)]">Wiki</Link>
@@ -47,7 +53,9 @@ export default async function WikiPageView({ params }: Props) {
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <h1 className="text-3xl font-bold text-[var(--text)]">{page.title}</h1>
-        <div className="flex gap-2 flex-shrink-0">
+        <div className="flex gap-2 flex-shrink-0 items-center">
+          <PublishButton pageId={page.id} />
+          <ExportMenu pageId={page.id} />
           <Link href={`/wiki/${page.id}/history`}>
             <Button variant="ghost" size="sm">History</Button>
           </Link>
@@ -71,9 +79,7 @@ export default async function WikiPageView({ params }: Props) {
       {/* Content */}
       <div className="bg-[var(--content-bg)] rounded-lg border border-[var(--content-border)] p-6 min-h-48">
         {page.content ? (
-          <pre className="whitespace-pre-wrap font-sans text-[var(--text)] text-sm leading-relaxed">
-            {page.content}
-          </pre>
+          <MarkdownRenderer content={page.content} />
         ) : (
           <p className="text-[var(--text-muted)] italic">This page has no content yet.</p>
         )}
@@ -84,6 +90,11 @@ export default async function WikiPageView({ params }: Props) {
         <Link href={`/wiki/new?parent=${page.id}`}>
           <Button variant="outline" size="sm">+ Add Child Page</Button>
         </Link>
+      </div>
+
+      {/* Comments */}
+      <div className="border-t border-[var(--content-border)] pt-6">
+        <CommentsSection pageId={page.id} />
       </div>
     </div>
   );

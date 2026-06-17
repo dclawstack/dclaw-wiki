@@ -38,8 +38,8 @@ class WikiAIService:
                 "provider": str,
             }
         """
-        # Retrieve relevant pages
-        pages = await self._search.search(question, limit=5)
+        # Retrieve relevant pages (keyword-based so full-sentence questions match)
+        pages = await self._search.search_keywords(question, limit=5)
 
         context_parts = []
         sources = []

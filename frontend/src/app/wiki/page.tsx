@@ -3,6 +3,7 @@ import { listPages, type PageRead } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ImportDialog } from "@/components/import-dialog";
 
 export const dynamic = "force-dynamic";
 
@@ -32,9 +33,12 @@ export default async function WikiHome() {
     <div className="max-w-4xl mx-auto p-8 space-y-8">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-[var(--text)]">Wiki</h1>
-        <Link href="/wiki/new">
-          <Button>+ New Page</Button>
-        </Link>
+        <div className="flex items-center gap-2">
+          <ImportDialog />
+          <Link href="/wiki/new">
+            <Button>+ New Page</Button>
+          </Link>
+        </div>
       </div>
 
       {error && (

@@ -31,3 +31,45 @@ class SearchService:
             .limit(limit)
         )
         return list(result.scalars().all())
+
+    # Common words that add noise to keyword retrieval, not search relevance.
+    _STOPWORDS = {
+        "the", "a", "an", "and", "or", "of", "to", "in", "on", "for", "is",
+        "are", "do", "does", "how", "what", "why", "when", "where", "can",
+        "i", "you", "it", "this", "that", "with", "my", "me", "we", "us",
+    }
+
+    async def search_keywords(self, query: str, limit: int = 20) -> list[WikiPage]:
+        """Keyword-based retrieval for RAG: match ANY significant term.
+
+        Unlike :meth:`search` (which matches the whole query as one substring),
+        this splits a natural-language question into terms and ORs them across
+        title and content, so the copilot can find pages from full sentences.
+        Falls back to substring search when no usable terms remain.
+        """
+        terms = [
+            t for w in query.split()
+            if len(t := "".join(c for c in w if c.isalnum()).lower()) > 2
+            and t not in self._STOPWORDS
+        ]
+        if not terms:
+            return await self.search(query, limit=limit)
+
+        conditions = []
+        for term in terms:
+            pattern = f"%{term}%"
+            conditions.append(WikiPage.title.ilike(pattern))
+            conditions.append(WikiPage.content.ilike(pattern))
+
+        # Rank pages whose title matches any term above content-only matches.
+        title_match = or_(*(WikiPage.title.ilike(f"%{t}%") for t in terms))
+        result = await self.db.execute(
+            select(WikiPage)
+            .where(or_(*conditions))
+            .order_by(
+                case((title_match, 0), else_=1),
+                WikiPage.updated_at.desc(),
+            )
+            .limit(limit)
+        )
+        return list(result.scalars().all())
