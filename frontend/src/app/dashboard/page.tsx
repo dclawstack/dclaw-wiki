@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { sql } from "drizzle-orm";
-import { FileText, Eye } from "lucide-react";
+import { FileText, Eye, Map } from "lucide-react";
 import { db } from "@/db/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -24,8 +24,20 @@ async function getAnalytics() {
   const recentlyUpdated = rows<{ id: string; title: string; updatedAt: string }>(
     await db.execute(sql`SELECT id, title, updated_at AS "updatedAt" FROM documents ORDER BY updated_at DESC LIMIT 5`),
   );
-  return { totalPages, totalViews, popular, recentlyUpdated };
+  const roadmapItems = rows<{ itemKey: string; phase: string; title: string; status: string }>(
+    await db.execute(sql`
+      SELECT item_key AS "itemKey", phase, title, status FROM roadmap
+      ORDER BY phase, item_key`),
+  );
+  return { totalPages, totalViews, popular, recentlyUpdated, roadmapItems };
 }
+
+const STATUS_STYLES: Record<string, string> = {
+  done: "bg-green-500/15 text-green-600",
+  in_progress: "bg-amber-500/15 text-amber-600",
+  planned: "bg-slate-500/15 text-slate-500",
+  deferred: "bg-slate-500/10 text-slate-400 line-through",
+};
 
 function StatCard({ label, value, icon: Icon }: { label: string; value: number; icon: typeof FileText }) {
   return (
@@ -42,7 +54,10 @@ function StatCard({ label, value, icon: Icon }: { label: string; value: number; 
 }
 
 export default async function DashboardPage() {
-  const { totalPages, totalViews, popular, recentlyUpdated } = await getAnalytics();
+  const { totalPages, totalViews, popular, recentlyUpdated, roadmapItems } = await getAnalytics();
+  const roadmapActive = roadmapItems.filter((r) => r.status !== "deferred");
+  const roadmapDone = roadmapActive.filter((r) => r.status === "done").length;
+  const phases = Array.from(new Set(roadmapItems.map((r) => r.phase)));
 
   return (
     <div className="mx-auto max-w-4xl space-y-6 py-8">
@@ -110,6 +125,45 @@ export default async function DashboardPage() {
                 </li>
               ))}
             </ul>
+          )}
+        </CardContent>
+      </Card>
+
+      <Card className="bg-[var(--content-bg)] border-[var(--content-border)]" data-testid="roadmap-card">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-base text-[var(--text)]">Build roadmap</CardTitle>
+          <span className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
+            <Map className="h-4 w-4 text-[var(--accent-col)]" />
+            {roadmapDone}/{roadmapActive.length} shipped
+          </span>
+        </CardHeader>
+        <CardContent>
+          {roadmapItems.length === 0 ? (
+            <p className="text-sm text-[var(--text-muted)]">No roadmap items yet.</p>
+          ) : (
+            <div className="space-y-4">
+              {phases.map((phase) => (
+                <div key={phase}>
+                  <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
+                    {phase}
+                  </h3>
+                  <ul className="space-y-1 text-sm">
+                    {roadmapItems
+                      .filter((r) => r.phase === phase)
+                      .map((r) => (
+                        <li key={r.itemKey} className="flex items-center justify-between gap-2">
+                          <span className="text-[var(--text)]">{r.title}</span>
+                          <span
+                            className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${STATUS_STYLES[r.status] ?? STATUS_STYLES.planned}`}
+                          >
+                            {r.status.replace("_", " ")}
+                          </span>
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
           )}
         </CardContent>
       </Card>

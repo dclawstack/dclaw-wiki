@@ -23,7 +23,7 @@ export async function POST(_req: Request, { params }: { params: { id: string; re
       },
       { role: "user", content: `OLD:\n${oldContent.slice(0, 4000)}\n\nNEW:\n${rev.content.slice(0, 4000)}` },
     ],
-    { model: MODELS.cheap, maxTokens: 80 },
+    { model: MODELS.free, maxTokens: 80 },
   );
   const updated = await setRevisionSummary(params.rev, summary);
   return NextResponse.json(updated ?? { changeSummary: summary });

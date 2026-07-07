@@ -5,11 +5,35 @@
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 // Tiered model selection — pick the cheapest model that fits the job.
+// Tiers span diverse families so the consensus verifier is a genuinely
+// independent second opinion, not the same model twice.
 export const MODELS = {
-  cheap: process.env.OR_MODEL_CHEAP || "openai/gpt-4o-mini",
-  alt: process.env.OR_MODEL_ALT || "google/gemini-flash-1.5",
-  strong: process.env.OR_MODEL_STRONG || "anthropic/claude-3.5-sonnet",
+  free: process.env.OR_MODEL_FREE || "meta-llama/llama-3.3-70b-instruct:free",
+  cheap: process.env.OR_MODEL_CHEAP || "deepseek/deepseek-v4-flash",
+  alt: process.env.OR_MODEL_ALT || "google/gemini-2.5-flash-lite",
+  strong: process.env.OR_MODEL_STRONG || "anthropic/claude-haiku-4.5",
 } as const;
+
+// Monthly spend ceiling (USD). At 80% paid calls degrade to the free tier;
+// at 100% paid calls are refused outright.
+const BUDGET_USD = Number(process.env.OR_BUDGET_MONTHLY_USD || 10);
+let budgetCache: { usage: number; fetchedAt: number } | null = null;
+
+async function monthlyUsage(key: string): Promise<number> {
+  if (budgetCache && Date.now() - budgetCache.fetchedAt < 10 * 60 * 1000) {
+    return budgetCache.usage;
+  }
+  try {
+    const resp = await fetch("https://openrouter.ai/api/v1/key", {
+      headers: { Authorization: `Bearer ${key}` },
+    });
+    const data = await resp.json();
+    budgetCache = { usage: data?.data?.usage_monthly ?? 0, fetchedAt: Date.now() };
+  } catch {
+    budgetCache = { usage: 0, fetchedAt: Date.now() }; // fail open, re-check in 10 min
+  }
+  return budgetCache.usage;
+}
 
 type Msg = { role: "system" | "user" | "assistant"; content: string };
 
@@ -19,6 +43,14 @@ export async function chat(
 ): Promise<string> {
   const key = process.env.OPENROUTER_API_KEY;
   if (!key) throw new Error("OPENROUTER_API_KEY not set");
+  let model = opts.model || MODELS.cheap;
+  if (model !== MODELS.free) {
+    const usage = await monthlyUsage(key);
+    if (usage >= BUDGET_USD) {
+      throw new Error(`AI budget exhausted ($${usage.toFixed(2)} of $${BUDGET_USD}/mo)`);
+    }
+    if (usage >= BUDGET_USD * 0.8) model = MODELS.free;
+  }
   const resp = await fetch(OPENROUTER_URL, {
     method: "POST",
     headers: {
@@ -27,7 +59,7 @@ export async function chat(
       "X-Title": "DClaw Trust Wiki",
     },
     body: JSON.stringify({
-      model: opts.model || MODELS.cheap,
+      model,
       messages,
       max_tokens: opts.maxTokens ?? 700,
       temperature: opts.temperature ?? 0.2,
