@@ -10,6 +10,7 @@ class PageCreate(BaseModel):
     content: str = ""
     parent_id: Optional[str] = None
     created_by: Optional[str] = None
+    tags: list[str] = []
 
 
 class PageUpdate(BaseModel):
@@ -17,6 +18,7 @@ class PageUpdate(BaseModel):
     content: Optional[str] = None
     parent_id: Optional[str] = None
     updated_by: Optional[str] = None
+    tags: Optional[list[str]] = None
 
 
 class PageRead(BaseModel):
@@ -32,6 +34,10 @@ class PageRead(BaseModel):
     updated_by: Optional[str]
     created_at: datetime
     updated_at: datetime
+    tags: list[str] = []
+    verified_at: Optional[datetime] = None
+    verified_by: Optional[str] = None
+    freshness_state: str = "unknown"
 
 
 class PageTree(BaseModel):

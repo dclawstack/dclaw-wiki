@@ -1,102 +1,44 @@
 import Link from "next/link";
-import { listPages, type PageRead } from "@/lib/api";
+import { listPages } from "@/lib/wiki";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 
 export const dynamic = "force-dynamic";
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-}
+const FRESH: Record<string, string> = {
+  verified: "bg-green-500/15 text-green-600 dark:text-green-400",
+  stale: "bg-amber-500/15 text-amber-600 dark:text-amber-400",
+  unverified: "bg-[var(--surface)] text-[var(--text-muted)]",
+};
 
 export default async function WikiHome() {
-  let pages: PageRead[] = [];
-  let error = null;
-  try {
-    pages = await listPages();
-  } catch (e) {
-    error = "Could not connect to backend.";
-  }
-
-  const rootPages = pages.filter((p) => !p.parent_id);
-  const recentPages = [...pages]
-    .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
-    .slice(0, 5);
+  const pages = await listPages();
+  const recent = [...pages].sort((a, b) => +new Date(b.updatedAt) - +new Date(a.updatedAt)).slice(0, 6);
 
   return (
-    <div className="max-w-4xl mx-auto p-8 space-y-8">
+    <div className="space-y-8">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-[var(--text)]">Wiki</h1>
-        <Link href="/wiki/new">
-          <Button>+ New Page</Button>
-        </Link>
+        <h1 className="text-2xl font-bold text-[var(--text)]">Wiki</h1>
+        <Link href="/wiki/new"><Button>+ New page</Button></Link>
       </div>
 
-      {error && (
-        <div className="rounded-md bg-[var(--error-bg)] border border-[var(--error-border)] p-4 text-sm text-[var(--error-text)]">
-          {error}
+      {pages.length === 0 ? (
+        <div className="rounded-lg border border-[var(--content-border)] bg-[var(--content-bg)] p-8 text-center text-[var(--text-muted)]">
+          <p className="mb-4">No pages yet.</p>
+          <Link href="/wiki/new"><Button variant="outline">Create your first page</Button></Link>
         </div>
-      )}
-
-      {recentPages.length > 0 && (
-        <section>
-          <h2 className="text-lg font-semibold text-[var(--text)] mb-3">Recently Updated</h2>
-          <div className="space-y-2">
-            {recentPages.map((page) => (
-              <Link key={page.id} href={`/wiki/${page.id}`} className="block group">
-                <div className="flex items-center justify-between rounded-lg border border-[var(--content-border)] bg-[var(--content-bg)] px-4 py-3 hover:border-[var(--accent-col)] hover:shadow-sm transition">
-                  <span className="font-medium text-[var(--text)] group-hover:text-[var(--accent-col)]">{page.title}</span>
-                  <span className="text-xs text-[var(--text-muted)]">{formatDate(page.updated_at)}</span>
-                </div>
-              </Link>
-            ))}
-          </div>
+      ) : (
+        <section className="space-y-2">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-[var(--text-muted)]">Recently updated</h2>
+          {recent.map((p) => (
+            <Link key={p.id} href={`/wiki/${p.id}`} className="block">
+              <div className="flex items-center justify-between rounded-lg border border-[var(--content-border)] bg-[var(--content-bg)] px-4 py-3 hover:border-[var(--accent-col)]">
+                <span className="font-medium text-[var(--text)]">{p.title}</span>
+                <span className={`rounded-full px-2 py-0.5 text-xs font-medium capitalize ${FRESH[p.freshnessState] ?? FRESH.unverified}`}>{p.freshnessState}</span>
+              </div>
+            </Link>
+          ))}
         </section>
       )}
-
-      <section>
-        <h2 className="text-lg font-semibold text-[var(--text)] mb-3">
-          All Pages
-          {pages.length > 0 && (
-            <Badge variant="secondary" className="ml-2 text-xs">
-              {pages.length}
-            </Badge>
-          )}
-        </h2>
-        {rootPages.length === 0 ? (
-          <Card className="bg-[var(--content-bg)] border-[var(--content-border)]">
-            <CardContent className="pt-8 pb-8 text-center text-[var(--text-muted)]">
-              <p className="mb-4">No pages yet. Create your first wiki page to get started.</p>
-              <Link href="/wiki/new">
-                <Button variant="outline">Create First Page</Button>
-              </Link>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="grid gap-4 sm:grid-cols-2">
-            {rootPages.map((page) => (
-              <Link key={page.id} href={`/wiki/${page.id}`} className="block group">
-                <Card className="h-full bg-[var(--content-bg)] border-[var(--content-border)] hover:border-[var(--accent-col)] hover:shadow-sm transition">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-base text-[var(--text)] group-hover:text-[var(--accent-col)]">{page.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-[var(--text-muted)] line-clamp-2">
-                      {page.content || "No content yet."}
-                    </p>
-                    <p className="text-xs text-[var(--text-muted)] mt-2">{formatDate(page.updated_at)}</p>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        )}
-      </section>
     </div>
   );
 }

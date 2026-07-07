@@ -1,28 +1,16 @@
 import { notFound } from "next/navigation";
-import { getPage } from "@/lib/api";
+import { getPage } from "@/lib/wiki";
 import { PageEditor } from "@/components/page-editor";
 
 export const dynamic = "force-dynamic";
 
-interface Props {
-  params: { id: string };
-}
-
-export default async function EditPage({ params }: Props) {
-  let page;
-  try {
-    page = await getPage(params.id);
-  } catch {
-    notFound();
-  }
-
+export default async function EditPage({ params }: { params: { id: string } }) {
+  const page = await getPage(params.id);
+  if (!page) notFound();
   return (
-    <div className="max-w-3xl mx-auto p-8 space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-[var(--text)]">Edit Page</h1>
-        <p className="text-sm text-[var(--text-muted)] mt-1">Editing: {page.title}</p>
-      </div>
-      <PageEditor page={page} />
+    <div className="max-w-5xl space-y-6">
+      <h1 className="text-2xl font-bold text-[var(--text)]">Edit page</h1>
+      <PageEditor page={{ id: page.id, title: page.title, content: page.content }} />
     </div>
   );
 }

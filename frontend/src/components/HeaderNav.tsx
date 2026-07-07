@@ -6,7 +6,10 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 
 const NAV_ITEMS = [
   { href: "/wiki", label: "Wiki" },
+  { href: "/ask", label: "Ask" },
+  { href: "/templates", label: "Templates" },
   { href: "/dashboard", label: "Dashboard" },
+  { href: "/gaps", label: "Gaps" },
 ];
 
 export function HeaderNav() {

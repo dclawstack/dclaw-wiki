@@ -20,6 +20,7 @@ class WikiRepository:
             parent_id=data.parent_id,
             created_by=data.created_by,
             updated_by=data.created_by,
+            tags=data.tags,
         )
         # Build materialized path after we have the id
         self.db.add(page)
@@ -71,6 +72,8 @@ class WikiRepository:
             page.parent_id = data.parent_id
         if data.updated_by is not None:
             page.updated_by = data.updated_by
+        if data.tags is not None:
+            page.tags = data.tags
         page.updated_at = utc_now()
 
         await self.db.commit()
@@ -112,6 +115,30 @@ class WikiRepository:
             .order_by(PageRevision.revision_number.desc())
         )
         return list(result.scalars().all())
+
+    async def previous_revision_content(self, page_id: str, revision_number: int) -> str:
+        """Content of the most recent revision before `revision_number` ("" if none)."""
+        result = await self.db.execute(
+            select(PageRevision)
+            .where(
+                PageRevision.page_id == page_id,
+                PageRevision.revision_number < revision_number,
+            )
+            .order_by(PageRevision.revision_number.desc())
+        )
+        prev = result.scalars().first()
+        return prev.content if prev else ""
+
+    async def set_revision_summary(
+        self, page_id: str, revision_id: str, summary: str
+    ) -> Optional[PageRevision]:
+        revision = await self.get_revision(page_id, revision_id)
+        if not revision:
+            return None
+        revision.change_summary = summary
+        await self.db.commit()
+        await self.db.refresh(revision)
+        return revision
 
     async def get_revision(self, page_id: str, revision_id: str) -> Optional[PageRevision]:
         result = await self.db.execute(

@@ -2,40 +2,21 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { restoreRevision } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 
-interface Props {
-  pageId: string;
-  revisionId: string;
-}
-
-export function RestoreButton({ pageId, revisionId }: Props) {
+export function RestoreButton({ documentId, revisionId }: { documentId: string; revisionId: string }) {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [busy, setBusy] = useState(false);
 
-  async function handleRestore() {
-    if (!confirm("Restore this revision? The current version will be saved in history.")) return;
-    setLoading(true);
+  async function restore() {
+    setBusy(true);
     try {
-      await restoreRevision(pageId, revisionId);
-      router.push(`/wiki/${pageId}`);
-      router.refresh();
-    } catch {
-      alert("Failed to restore revision.");
-    } finally {
-      setLoading(false);
-    }
+      const r = await fetch(`/api/pages/${documentId}/revisions/${revisionId}/restore`, { method: "POST" });
+      if (r.ok) { router.push(`/wiki/${documentId}`); router.refresh(); }
+    } finally { setBusy(false); }
   }
 
   return (
-    <Button
-      variant="outline"
-      size="sm"
-      onClick={handleRestore}
-      disabled={loading}
-    >
-      {loading ? "Restoring…" : "Restore"}
-    </Button>
+    <Button size="sm" variant="outline" onClick={restore} disabled={busy}>{busy ? "Restoring…" : "Restore"}</Button>
   );
 }

@@ -1,15 +1,15 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
-import { WikiCopilot } from "@/components/wiki-copilot"
 import { ThemeProvider } from "@/components/ThemeProvider"
 import { HeaderNav } from "@/components/HeaderNav"
+import { Copilot } from "@/components/copilot"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "DClaw Wiki",
-  description: "Internal Wikipedia — knowledge management for your team",
+  title: "DClaw Wiki — the wiki that keeps itself true",
+  description: "Cited answers with a confidence score and an honest \"I don't know\". Knowledge that stays trustworthy.",
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <HeaderNav />
             <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">{children}</main>
           </div>
-          <WikiCopilot />
+          <Copilot />
         </ThemeProvider>
       </body>
     </html>

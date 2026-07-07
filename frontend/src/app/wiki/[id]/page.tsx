@@ -1,89 +1,70 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPage } from "@/lib/api";
+import { getPage, breadcrumbs } from "@/lib/wiki";
 import { Button } from "@/components/ui/button";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { TableOfContents } from "@/components/table-of-contents";
+import { ViewTracker } from "@/components/view-tracker";
+import { VerifyButton } from "@/components/verify-button";
+import { CommentsSection } from "@/components/comments-section";
 
 export const dynamic = "force-dynamic";
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
+const FRESH: Record<string, string> = {
+  verified: "bg-green-500/15 text-green-600 dark:text-green-400",
+  stale: "bg-amber-500/15 text-amber-600 dark:text-amber-400",
+  unverified: "bg-[var(--surface)] text-[var(--text-muted)]",
+};
 
-interface Props {
-  params: { id: string };
-}
-
-export default async function WikiPageView({ params }: Props) {
-  let page;
-  try {
-    page = await getPage(params.id);
-  } catch {
-    notFound();
-  }
+export default async function PageView({ params }: { params: { id: string } }) {
+  const page = await getPage(params.id);
+  if (!page) notFound();
+  const trail = await breadcrumbs(page.id);
+  const tags = (page.tags as string[]) ?? [];
 
   return (
-    <div className="max-w-4xl mx-auto p-8 space-y-6">
-      {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
+    <div className="max-w-3xl space-y-5">
+      <ViewTracker documentId={page.id} />
+
+      <nav className="flex flex-wrap items-center gap-2 text-sm text-[var(--text-muted)]">
         <Link href="/wiki" className="hover:text-[var(--accent-col)]">Wiki</Link>
-        <span>/</span>
-        {page.parent_id && (
-          <>
-            <Link href={`/wiki/${page.parent_id}`} className="hover:text-[var(--accent-col)] truncate max-w-xs">
-              Parent
-            </Link>
+        {trail.map((b) => (
+          <span key={b.id} className="flex items-center gap-2">
             <span>/</span>
-          </>
-        )}
-        <span className="text-[var(--text)] font-medium truncate">{page.title}</span>
+            {b.id === page.id ? <span className="font-medium text-[var(--text)]">{b.title}</span> : <Link href={`/wiki/${b.id}`} className="hover:text-[var(--accent-col)]">{b.title}</Link>}
+          </span>
+        ))}
       </nav>
 
-      {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <h1 className="text-3xl font-bold text-[var(--text)]">{page.title}</h1>
-        <div className="flex gap-2 flex-shrink-0">
-          <Link href={`/wiki/${page.id}/history`}>
-            <Button variant="ghost" size="sm">History</Button>
-          </Link>
-          <Link href={`/wiki/${page.id}/edit`}>
-            <Button size="sm">Edit</Button>
-          </Link>
+        <div className="flex flex-shrink-0 items-center gap-2">
+          <VerifyButton documentId={page.id} />
+          <Link href={`/wiki/${page.id}/history`}><Button variant="ghost" size="sm">History</Button></Link>
+          <Link href={`/wiki/${page.id}/edit`}><Button size="sm">Edit</Button></Link>
         </div>
       </div>
 
-      {/* Meta */}
-      <div className="flex items-center gap-3 text-xs text-[var(--text-muted)] flex-wrap">
-        {page.created_by && (
-          <span>Created by <span className="text-[var(--text)]">{page.created_by}</span></span>
-        )}
-        {page.updated_by && (
-          <span>· Last edited by <span className="text-[var(--text)]">{page.updated_by}</span></span>
-        )}
-        <span>· {formatDate(page.updated_at)}</span>
+      <div className="flex items-center gap-2 text-xs">
+        <span className={`rounded-full px-2 py-0.5 font-medium capitalize ${FRESH[page.freshnessState] ?? FRESH.unverified}`}>
+          {page.freshnessState === "unverified" ? "Unverified" : page.freshnessState}
+        </span>
+        {page.verifiedAt && <span className="text-[var(--text-muted)]">verified {new Date(page.verifiedAt).toLocaleDateString()}</span>}
+        {tags.map((t) => <span key={t} className="rounded-full bg-[var(--surface)] px-2 py-0.5 text-[var(--text-muted)]">#{t}</span>)}
       </div>
 
-      {/* Content */}
-      <div className="bg-[var(--content-bg)] rounded-lg border border-[var(--content-border)] p-6 min-h-48">
-        {page.content ? (
-          <pre className="whitespace-pre-wrap font-sans text-[var(--text)] text-sm leading-relaxed">
-            {page.content}
-          </pre>
-        ) : (
-          <p className="text-[var(--text-muted)] italic">This page has no content yet.</p>
-        )}
+      <TableOfContents content={page.content} />
+
+      <div className="rounded-lg border border-[var(--content-border)] bg-[var(--content-bg)] p-6">
+        {page.content ? <MarkdownRenderer content={page.content} /> : <p className="italic text-[var(--text-muted)]">This page has no content yet.</p>}
       </div>
 
-      {/* Actions */}
-      <div className="flex gap-3 pt-2">
-        <Link href={`/wiki/new?parent=${page.id}`}>
-          <Button variant="outline" size="sm">+ Add Child Page</Button>
-        </Link>
+      <div className="flex gap-3 pt-1">
+        <Link href={`/wiki/new?parent=${page.id}`}><Button variant="outline" size="sm">+ Add child page</Button></Link>
+      </div>
+
+      <div className="border-t border-[var(--content-border)] pt-6">
+        <CommentsSection documentId={page.id} />
       </div>
     </div>
   );
